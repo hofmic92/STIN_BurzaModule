@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "nAe7tjauuQi9OzuOxLJZ5sIbK9EJXQrU5gz79Oj+Wto=",
+  "Hash": "CVg8ZNEERct5TpKEmw5Kp3wp+0/eq1UteWHNtjTwHfY=",
   "Source": "STIN_BurzaModule",
   "BasePath": "_content/STIN_BurzaModule",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }
