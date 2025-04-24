@@ -31,3 +31,6 @@ C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\obj\Debug\net8.0\r
 C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\obj\Debug\net8.0\STIN_BurzaModule.pdb
 C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\obj\Debug\net8.0\STIN_BurzaModule.genruntimeconfig.cache
 C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\obj\Debug\net8.0\ref\STIN_BurzaModule.dll
+C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\obj\Debug\net8.0\STIN_BurzaModule.sourcelink.json
+C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\obj\Debug\net8.0\STIN_BurzaModule.RazorAssemblyInfo.cache
+C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\obj\Debug\net8.0\STIN_BurzaModule.RazorAssemblyInfo.cs
