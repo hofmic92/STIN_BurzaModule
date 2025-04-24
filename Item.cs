@@ -4,9 +4,12 @@ namespace STIN_BurzaModule
 {
     public class Item
     {
-        string name;
-        DateOnly date;
-        int rating; //
-        int sell;   //1 0
+        public string Name { get; set; }
+        public long Date { get; set; } //UNIX timestamp
+        public int? Rating { get; set; }
+        public int? Sell { get; set; }
     }
+
 }
+
+
