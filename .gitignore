@@ -55,3 +55,7 @@ nunit-*.xml
 
 #neco od visual studia
 .vs
+
+#build directories
+/bin/
+/obj/

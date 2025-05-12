@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-
+//CELÝ TENTO SOUBOR JE POTŘEBA UPRAVIT
 namespace STIN_BurzaModule.Services
 {
     public class StockService
@@ -37,7 +37,7 @@ namespace STIN_BurzaModule.Services
                     var validItems = new List<Item>();
                     foreach (var item in items ?? new List<Item>())
                     {
-                        if (string.IsNullOrEmpty(item.Name) || item.Rating.HasValue && (item.Rating < -10 || item.Rating > 10) || item.Sell.HasValue && (item.Sell != 0 && item.Sell != 1))
+                        if (string.IsNullOrEmpty(item.getName()) || item.getRating().HasValue && (item.getRating() < -10 || item.getRating() > 10) || item.getSell().HasValue && (item.getSell() != 0 && item.getSell() != 1))
                         {
                             _logger.LogWarning($"Invalid item data: {JsonSerializer.Serialize(item)}. Ignoring.");
                             continue;
@@ -63,7 +63,7 @@ namespace STIN_BurzaModule.Services
 
             foreach (var item in items ?? new List<Item>())
             {
-                var historicalDataUrl = $"{_config["StockApi:BaseUrl"]}/{item.Name}/history?days={_config.GetValue<int>("StockApi:HistoryDays", 10)}";
+                var historicalDataUrl = $"{_config["StockApi:BaseUrl"]}/{item.getName()}/history?days={_config.GetValue<int>("StockApi:HistoryDays", 10)}";
                 try
                 {
                     var response = await client.GetAsync(historicalDataUrl, stoppingToken);
@@ -80,7 +80,7 @@ namespace STIN_BurzaModule.Services
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, $"Failed to fetch historical data for {item.Name}.");
+                    _logger.LogError(ex, $"Failed to fetch historical data for {item.getName()}.");
                 }
             }
             return filteredItems;
@@ -100,11 +100,14 @@ namespace STIN_BurzaModule.Services
                 var ratedItems = JsonSerializer.Deserialize<List<Item>>(await response.Content.ReadAsStringAsync()) ?? new List<Item>();
                 var userRatingThreshold = _config.GetValue<int>("UserSettings:RatingThreshold", 5);
 
-                var itemsToSell = ratedItems.Where(i => i.Rating > userRatingThreshold).ToList();
-                foreach (var item in itemsToSell)
+                foreach (Item item in ratedItems) //tady to bude potřeba překopat
                 {
-                    item.Sell = 1;
+                    item.setSell();
                 }
+                var itemsToSell = ratedItems.Where(i => i.getSell() ==1 ).ToList();
+                
+
+                
 
                 var sellEndpoint = _config["NewsModule:SaleStockEndpoint"] ?? "http://partner:8000/salestock";
                 var sellContent = new StringContent(JsonSerializer.Serialize(itemsToSell), System.Text.Encoding.UTF8, "application/json");
