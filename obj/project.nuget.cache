@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "6rn4vMJ+NxQ=",
+  "dgSpecHash": "PoPqs17LVRw=",
   "success": true,
   "projectFilePath": "C:\\Users\\hofmi\\source\\repos\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\hofmi\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512",
     "C:\\Users\\hofmi\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.8\\microsoft.aspnetcore.openapi.8.0.8.nupkg.sha512",
     "C:\\Users\\hofmi\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\hofmi\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
