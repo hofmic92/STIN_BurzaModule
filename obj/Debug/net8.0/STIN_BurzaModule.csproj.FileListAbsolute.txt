@@ -105,4 +105,4 @@ C:\Users\filip\Source\Repos\STIN_BurzaModule\obj\Debug\net8.0\refint\STIN_BurzaM
 C:\Users\filip\Source\Repos\STIN_BurzaModule\obj\Debug\net8.0\STIN_BurzaModule.pdb
 C:\Users\filip\Source\Repos\STIN_BurzaModule\obj\Debug\net8.0\STIN_BurzaModule.genruntimeconfig.cache
 C:\Users\filip\Source\Repos\STIN_BurzaModule\obj\Debug\net8.0\ref\STIN_BurzaModule.dll
-C:\Users\filip\Source\Repos\STIN_BurzaModule\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\filip\Source\Repos\STIN_BurzaModule\bin\Debug\net8.0\favorites.json

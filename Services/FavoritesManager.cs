@@ -12,10 +12,9 @@ namespace STIN_BurzaModule
         {
             _config = config;
             _filePath = "favorites.json";
-            // Initialize with default favorites from appsettings if file doesn't exist
             if (!File.Exists(_filePath))
             {
-                var defaultFavorites = _config.GetSection("Favorites").Get<List<string>>();
+                var defaultFavorites = _config.GetSection("Favorites").Get<List<string>>() ?? new List<string>();
                 File.WriteAllText(_filePath, JsonSerializer.Serialize(defaultFavorites));
             }
         }
@@ -34,6 +33,26 @@ namespace STIN_BurzaModule
         public void ClearStorage()
         {
             File.WriteAllText(_filePath, JsonSerializer.Serialize(new List<string>()));
+        }
+
+        public void AddFavorite(string companyName)
+        {
+            var favorites = GetFavorites();
+            if (!favorites.Contains(companyName))
+            {
+                favorites.Add(companyName);
+                SaveFavorites(favorites);
+            }
+        }
+
+        public void RemoveFavorite(string companyName)
+        {
+            var favorites = GetFavorites();
+            if (favorites.Contains(companyName))
+            {
+                favorites.Remove(companyName);
+                SaveFavorites(favorites);
+            }
         }
     }
 }
