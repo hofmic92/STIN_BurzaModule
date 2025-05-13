@@ -35,3 +35,8 @@ C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\obj\Debug\net8.0\S
 C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\obj\Debug\net8.0\STIN_BurzaModule.RazorAssemblyInfo.cache
 C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\obj\Debug\net8.0\STIN_BurzaModule.RazorAssemblyInfo.cs
 C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\bin\Debug\net8.0\CsvHelper.dll
+C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\bin\Debug\net8.0\System.IO.Pipelines.dll
+C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\bin\Debug\net8.0\System.Text.Json.dll
+C:\Users\hofmi\source\repos\STIN_BurzaModule\STIN_BurzaModule\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll

@@ -1,6 +1,6 @@
-@STIN_BurzaModule_HostAddress = http://localhost:5078
+@STIN_BurzaModule_HostAddress = http://localhost:7070
 
-GET {{STIN_BurzaModule_HostAddress}}/weatherforecast/
+GET {{STIN_BurzaModule_HostAddress}}
 Accept: application/json
 
 ###
