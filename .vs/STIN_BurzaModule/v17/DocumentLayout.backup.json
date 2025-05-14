@@ -1,0 +1,160 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\marti\\documents\\stin\\stin_burzamodule\\filters\\filter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:filters\\filter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\marti\\documents\\stin\\stin_burzamodule\\filters\\userfiltersettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:filters\\userfiltersettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\marti\\documents\\stin\\stin_burzamodule\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\marti\\documents\\stin\\stin_burzamodule\\filters\\declinethreedaysfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:filters\\declinethreedaysfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\marti\\documents\\stin\\stin_burzamodule\\filters\\finalfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:filters\\finalfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\marti\\documents\\stin\\stin_burzamodule\\filters\\morethantwodeclinesfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:filters\\morethantwodeclinesfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\marti\\documents\\stin\\stin_burzamodule\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\marti\\documents\\stin\\stin_burzamodule\\items.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:items.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 142,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserFilterSettings.cs",
+              "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Filters\\UserFilterSettings.cs",
+              "RelativeDocumentMoniker": "Filters\\UserFilterSettings.cs",
+              "ToolTip": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Filters\\UserFilterSettings.cs",
+              "RelativeToolTip": "Filters\\UserFilterSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:20:43.579Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-14T14:20:08.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Filter.cs",
+              "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Filters\\Filter.cs",
+              "RelativeDocumentMoniker": "Filters\\Filter.cs",
+              "ToolTip": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Filters\\Filter.cs",
+              "RelativeToolTip": "Filters\\Filter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T13:50:17.403Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FinalFilter.cs",
+              "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Filters\\FinalFilter.cs",
+              "RelativeDocumentMoniker": "Filters\\FinalFilter.cs",
+              "ToolTip": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Filters\\FinalFilter.cs",
+              "RelativeToolTip": "Filters\\FinalFilter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:11:04.057Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MoreThanTwoDeclinesFilter.cs",
+              "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Filters\\MoreThanTwoDeclinesFilter.cs",
+              "RelativeDocumentMoniker": "Filters\\MoreThanTwoDeclinesFilter.cs",
+              "ToolTip": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Filters\\MoreThanTwoDeclinesFilter.cs",
+              "RelativeToolTip": "Filters\\MoreThanTwoDeclinesFilter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:09:48.864Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DeclineThreeDaysFilter.cs",
+              "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Filters\\DeclineThreeDaysFilter.cs",
+              "RelativeDocumentMoniker": "Filters\\DeclineThreeDaysFilter.cs",
+              "ToolTip": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Filters\\DeclineThreeDaysFilter.cs",
+              "RelativeToolTip": "Filters\\DeclineThreeDaysFilter.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T14:07:03.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Pages\\Index.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Index.cshtml",
+              "ToolTip": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Pages\\Index.cshtml",
+              "RelativeToolTip": "Pages\\Index.cshtml",
+              "ViewState": "AgIAALoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-14T13:49:19.857Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Items.cs",
+              "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Items.cs",
+              "RelativeDocumentMoniker": "Items.cs",
+              "ToolTip": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\Items.cs",
+              "RelativeToolTip": "Items.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T13:49:05.67Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
