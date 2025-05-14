@@ -1,6 +1,10 @@
 ﻿namespace STIN_BurzaModule.Filters
 {
-    public class Filter
+
+    public abstract class Filter
     {
+        public abstract List<Item> filter(List<Item> items);
+
     }
+
 }

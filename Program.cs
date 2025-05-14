@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using STIN_BurzaModule;
 using STIN_BurzaModule.DataModel;
 using StockModule.Pages;
@@ -12,10 +11,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Registrace služeb
 builder.Services.AddRazorPages();
-builder.Services.AddHttpClient(); // Nutné pro HttpClient v IndexModel
+builder.Services.AddHttpClient();
 builder.Services.AddHostedService<StockDataBackgroundService>();
 builder.Services.AddTransient<IndexModel>();
-// Build aplikace (POUZE JEDNOU!)
+builder.Services.AddScoped<StockService>();
+builder.Services.AddScoped<CommunicationManager>();
+builder.Services.AddScoped<DeclineThreeDaysFilter>();
+builder.Services.AddScoped<MoreThanTwoDeclinesFilter>();
+builder.Services.AddScoped<FinalFilter>();
+builder.Services.Configure<UserFilterSettings>(builder.Configuration.GetSection("UserFilters"));
+
+// Build aplikace
 var app = builder.Build();
 
 // Konfigurace middleware pipeline
@@ -29,13 +35,12 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 
-// Váš endpoint pro akcie
+// Endpointy
 app.MapGet("/neco", () =>
 {
     List<DataModel> items = new List<DataModel>
     {
-        new DataModel { Name = "Microsoft", Date = 1713960000, Rating = 0, Sell = 0 },
-        // ... (ostatní položky)
+        new Item("Microsoft", 1713960000, 0) { Rating = null, Sell = null }
     };
     return items;
 })
@@ -49,6 +54,7 @@ app.MapPost("/liststock-static", async () =>
 {
 
     //var items = GetStockItems();
+
 
     string jsonString = @"[
     {
@@ -64,20 +70,25 @@ app.MapPost("/liststock-static", async () =>
         ""sell"": 0
     },
     {
+
         ""name"": ""OpenAI"", 
         ""date"": 12345678, 
         ""rating"": 2, 
         ""sell"": 0
+
     }
 ]";
+
 
     List<DataModel> data = JsonSerializer.Deserialize<List<DataModel>>(jsonString);
     return Results.Ok(data);
 });
 
 
+
 app.MapPost("/salestock-static", async () =>
 {
+
 
     //var items = GetStockItems();
 
@@ -131,5 +142,6 @@ app.MapRazorPages();
 app.Run(); // Spuštění aplikace
 
 // Supporting classes
+
 
 
