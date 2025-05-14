@@ -11,51 +11,43 @@ ________________________________________________________________________________
 
 ### **Zadání: Modul Burza**
 
-#### **1. Modul, který bude na definovaný interval (0:00, 6:00, 12:00, 18:00) nebo na ruční start získávat aktuální nebo historická data pro definované položky (např. Microsoft) na burze**
+#### **Modul, který bude na definovaný interval (0:00, 6:00, 12:00, 18:00) nebo na ruční start získávat aktuální nebo historická data pro definované položky (např. Microsoft) na burze (umožnit uživateli definovat svůj seznam oblíbených položek).**
 - **Splněno**:
-  - **Interval**: `StockDataService` (v `Program.cs`) spouští `FetchAndProcessStockData` na časech 0:00, 6:00, 12:00 a 18:00 (pomocí `targetTimes`).
+  - **Interval**: `StockDataService` v `Program.cs` spouští `FetchAndProcessStockData` na časech 0:00, 6:00, 12:00 a 18:00 (pomocí `targetTimes`).
   - **Ruční start**: Endpoint `/data` umožňuje ruční získání dat (surových nebo filtrovaných pomocí parametru `filter`).
-  - **Historická data**: `FilterItems` (v `StockService.cs`) získává historická data (10 dní, definováno v `appsettings.json` jako `HistoryDays`), což odpovídá otázce "kolik dní zpět?" (zadání to neomezuje, 10 dní je rozumné).
-  - **Definované položky**: Data jsou získávána pro položky z API (`FetchStockData`) a uživatel může definovat oblíbené položky (viz níže).
-- **Chybí**:
-  - Zadání se ptá "Stahujeme vždy vše nebo inkrementálně?". Tvůj kód stahuje vždy vše (`FetchStockData`), což je funkční, ale inkrementální stahování (jen nová data od posledního stahování) není implementováno. To by vyžadovalo sledování posledního timestampu a úpravu logiky.
+  - **Historická data**: `FilterItems` v `StockService.cs` stahuje historická data (10 dní, definováno v `appsettings.json` jako `HistoryDays`).
+  - **Definované položky**: Data jsou získávána pro položky z API, a uživatel může definovat oblíbené položky přes `FavoritesManager` (uloženo v `favorites.json` a inicializováno z `appsettings.json`).
+- **Chybí**: Zadání se ptá "Stahujeme vždy vše nebo inkrementálně?". Tvůj kód stahuje vždy vše (`FetchStockData`), inkrementální stahování (jen nová data) není implementováno.
 
-#### **2. Umožnit uživateli definovat svůj seznam oblíbených položek**
-- **Splněno**:
-  - `FavoritesManager` (v `FavoritesManager.cs`) ukládá oblíbené položky do `favorites.json` a poskytuje metody `AddFavorite`, `RemoveFavorite` a `GetFavorites`.
-  - V `/ui` (v `Program.cs`) je možné přidávat a odebírat oblíbené položky přes formulář a JavaScript (query parametry `action` a `companyName`).
-  - Výchozí seznam oblíbených je definován v `appsettings.json` (`Favorites`).
-- **Chybí**:
-  - Zadání zmiňuje "persistence oblíbených položek" – to máš implementováno (ukládání do `favorites.json`), ale není explicitní možnost "mazání úložiště" přes UI. Metoda `ClearStorage` existuje, ale není dostupná z `/ui` (můžeš přidat tlačítko).
-
-#### **3. Umožnit uživateli definovat základní filtr na vývoj položky v čase**
+#### **Umožnit uživateli definovat základní filtr na vývoj položky v čase**
 - **Částečně splněno**:
-  - `FilterItems` (v `StockService.cs`) implementuje filtry podle zadání:
-    - "Odfiltrovat ty, co poslední 3 dny pracovní klesaly" (používá `declineDays`).
-    - "Odfiltrovat takové, které za posledních 5 pracovních dní měly více než dva poklesy" (používá `maxDeclines`).
-  - Filtry jsou nastaveny v `appsettings.json` (`DeclineDays` a `MaxDeclines`), což umožňuje uživateli je definovat přes konfiguraci.
-- **Chybí**:
-  - Uživatel nemůže dynamicky měnit filtry přes UI (např. přes formulář v `/ui`). Aktuálně jsou filtry statické a mění se pouze přes změnu `appsettings.json`. To lze doplnit přidáním formuláře a uložení do konfigurace.
+  - `FilterItems` implementuje filtry podle `DeclineDays` (výchozí 3) a `MaxDeclines` (výchozí 2) z `appsettings.json`.
+  - Filtry jsou definovány v konfiguraci, ale uživatel je nemůže dynamicky měnit přes UI (jen staticky přes `appsettings.json`).
+- **Chybí**: Dynamická změna filtrů přes UI (např. formulář).
 
-#### **4. Odfiltrovat ty, co poslední 3 dny pracovní klesaly**
+#### **Odfiltrovat ty, co poslední 3 dny pracovní klesaly**
 - **Splněno**:
-  - `FilterItems` kontroluje `last3WorkingDays.All(d => d.PriceChange < 0)` s vyloučením víkendů (`DayOfWeek != Saturday && DayOfWeek != Sunday`).
+  - `FilterItems` kontroluje `last3WorkingDays.All(d => d.PriceChange < 0)` s vyloučením víkendů.
 
-#### **5. Odfiltrovat takové, které za posledních 5 pracovních dní měly více než dva poklesy**
+#### **Odfiltrovat takové, které za posledních 5 pracovních dní měly více než dva poklesy**
 - **Splněno**:
   - `FilterItems` kontroluje `last5WorkingDays.Count(d => d.PriceChange < 0) > maxDeclines` (maxDeclines = 2).
 
-#### **6. Poslat požadavek na získání doporučení do modulu zprávy**
+#### **Poslat požadavek na získání doporučení do modulu zprávy**
 - **Splněno**:
-  - `SendToNewsModule` (v `StockService.cs`) posílá filtrovaná data na `rating` endpoint (`http://localhost:8000/rating`) pomocí HTTP POST.
+  - `SendToNewsModule` posílá filtrované položky na `http://localhost:8000/rating` pomocí HTTP POST.
 
-#### **7. Vezme výsledek hodnocení modulu zprávy a k těm položkám, které mají rating větší než uživatelem definovanou hodnotu doplní o doporučení prodat**
-- **Splněno**:
-  - `SendToNewsModule` zpracovává odpověď z `rating`, porovnává `item.Rating` s `userRatingThreshold` (z `appsettings.json`) a pokud je vyšší, nastaví `item.Sell = 1`.
+---
 
-#### **8. Výsledek pošle modulu zprávy**
+### **Modul Burza – krok II**
+
+#### **Vezme výsledek hodnocení modulu zprávy a k těm položkám, které mají rating větší než uživatelem definovanou hodnotu doplní o doporučení prodat**
 - **Splněno**:
-  - `SendToNewsModule` posílá položky s doporučením k prodeji na `salestock` endpoint (`http://localhost:8000/salestock`) pomocí HTTP POST.
+  - `SendToNewsModule` zpracovává odpověď z `rating`, porovnává `item.getRating()` s `userRatingThreshold` (výchozí 5 z `appsettings.json`) a pokud je vyšší, volá `item.setSell()`, což nastaví `Sell` na 1 podle logiky v `Item.cs`.
+
+#### **Výsledek pošle modulu zprávy**
+- **Splněno**:
+  - `SendToNewsModule` posílá položky s doporučením k prodeji (`Sell = 1`) na `http://localhost:8000/salestock`.
 
 ---
 
@@ -63,31 +55,29 @@ ________________________________________________________________________________
 
 #### **1. Obě UI musí běžet na PC i mobilu**
 - **Splněno**:
-  - `/ui` (v `Program.cs`) používá Bootstrap a přidané CSS (`@media (max-width: 768px)`) zajišťuje responzivitu pro PC i mobilní zařízení.
+  - `/ui` endpoint v `Program.cs` používá Bootstrap a přidané CSS (`@media (max-width: 768px)`) zajišťuje responzivitu pro PC i mobilní zařízení.
 
 #### **2. Moduly musí běžet mimo localhost**
 - **Částečně splněno**:
-  - `launchSettings.json` používá `0.0.0.0:5000`, což umožňuje přístup z venku (ne pouze `localhost`). To splňuje požadavek, pokud je aplikace nasazena na serveru.
-- **Chybí**:
-  - Aktuálně testujete lokálně. V produkčním prostředí musíš zajistit, aby Burza běžela na adrese dostupné zvenčí (např. server s veřejnou IP), a News modul na `partner:8000`. To vyžaduje nasazení a konfiguraci sítě.
+  - `launchSettings.json` používá `0.0.0.0:5000`, což umožňuje přístup z venku, pokud je aplikace nasazena na serveru.
+- **Chybí**: Aktuálně je testování lokální. V produkčním prostředí je potřeba nasazení na server s veřejnou IP a zajištění, aby News modul běžel na `partner:8000`.
 
 ---
 
-### **Obecné požadavky**
+### **Obecné**
 
 #### **1. Libovolný jazyk**
 - **Splněno**:
-  - Používáš C# s ASP.NET Core, což je povolené.
+  - Používá C# s ASP.NET Core, což je povolené.
 
 #### **2. Splnit test coverage > 80%**
 - **Chybí**:
-  - Testy nejsou implementovány. Potřebuješ přidat unit testy (např. pomocí xUnit) pro `StockService`, `FilterItems`, `SendToNewsModule` a `FavoritesManager`, aby pokrytí přesáhlo 80 %.
+  - Testy nejsou implementovány. Testovací projekt (`STIN_BurzaModule.Tests`) existuje, ale neobsahuje funkční testy, a pokrytí není generováno ani nahráváno (viz předchozí problém s Codecov).
 
 #### **3. Využít CD/CI - git**
 - **Částečně splněno**:
-  - Kód je v GitHubu (https://github.com/hofmic92/STIN_BurzaModule/tree/dev-main), což splňuje základní požadavek na Git.
-- **Chybí**:
-  - CI/CD pipeline (např. GitHub Actions) není nastavena. Potřebuješ přidat workflow pro automatické buildování, testování a nasazení.
+  - Kód je v GitHubu (https://github.com/hofmic92/STIN_BurzaModule), což splňuje základní požadavek na Git.
+- **Chybí**: CI/CD pipeline (např. GitHub Actions) je nastaven, ale selhává kvůli chybějícím souborům pokrytí. Potřebuješ opravit generování pokrytí (viz předchozí doporučení).
 
 ---
 
@@ -95,164 +85,113 @@ ________________________________________________________________________________
 
 #### **Modely UI pro Burza a Zprávy**
 - **Částečně splněno**:
-  - `/ui` (v `Program.cs`) je model pro Burzu a zobrazuje data, oblíbené položky a zprávy. Nicméně UI pro Zprávy není oddělené – zadání požaduje společné UI, což je v pořádku, ale statické zprávy by měly být nahrazeny dynamickými daty z News modulu (`liststock`).
-- **Chybí**:
-  - Dynamické načítání zpráv z News modulu.
+  - `/ui` endpoint je model pro Burzu a zobrazuje data a zprávy. Zprávy jsou načítány z `liststock`, ale zatím nejsou plně dynamické (používá fallback statických dat, pokud API selže).
+- **Chybí**: Oddělené UI pro Zprávy není implementováno, zadání očekává společné UI, ale zprávy by měly být dynamicky propojeny s Burzou.
 
 #### **Persistence oblíbených položek**
 - **Splněno**:
   - `FavoritesManager` ukládá oblíbené položky do `favorites.json`.
 
 #### **Co se myslí: získávat aktuální nebo historická data pro definované položky, kolik dní zpět? Stahujeme vždy vše nebo inkrementálně?**
-- **Splněno částečně**:
-  - Historická data jsou stahována (10 dní), což odpovídá otázce "kolik dní zpět?".
-  - Stahuje se vždy vše, nikoli inkrementálně (viz bod 1 v "Modul Burza" – chybí sledování posledního timestampu).
-- **Chybí**:
-  - Inkrementální stahování.
+- **Částečně splněno**:
+  - Historická data jsou stahována (10 dní, podle `HistoryDays`).
+  - Stahuje se vždy vše, inkrementální stahování není implementováno.
+- **Chybí**: Inkrementální stahování a explicitní specifikace období (10 dní je implicitní).
 
 #### **Mazání úložiště**
-- **Splněno částečně**:
-  - `FavoritesManager` má metodu `ClearStorage`, ale není volána z `/ui`. Můžeš přidat tlačítko pro mazání.
-- **Chybí**:
-  - Explicitní ovládání mazání přes UI.
+- **Částečně splněno**:
+  - `FavoritesManager` má metodu `ClearStorage`, ale není volána z `/ui` (můžeš přidat tlačítko).
+- **Chybí**: Explicitní ovládání mazání přes UI.
 
 #### **Externalizovat konfiguraci**
 - **Splněno**:
   - Konfigurace je externalizována v `appsettings.json` (např. `StockApi`, `NewsModule`, `UserSettings`).
 
-#### **JSON struktura**
+#### **JSON: name<string>, date<timestamp>, rating<int -10, 0, 10>, sell<0,1>**
 - **Splněno**:
-  - `Item.cs` odpovídá požadované struktuře: `name` (string), `date` (timestamp), `rating` (int -10 až 10), `sell` (0 nebo 1).
-  - Validace špatných dat s logováním je implementována v `FetchStockData`.
+  - `Item.cs` definuje privátní pole s gettery/settery pro `Name`, `Date`, `Rating` (validace -10 až 10 v `setRating`), `Sell` (0/1 v `setSell`).
+  - Validace špatných dat s logováním je v `FetchStockData`.
 
-#### **Endpoint definition**
+#### **Endpoint definition: url:port\endpoint, URL – partner, Port: 8000, Burza: rating, News: liststock, salestock**
 - **Splněno**:
-  - Burza volá `rating` a `salestock` na `localhost:8000` (v `appsettings.json`), což odpovídá zadání pro lokální testování. V produkci by to mělo být `partner:8000`.
+  - Burza volá `rating` a News poskytuje `liststock` a `salestock` na `localhost:8000` (konfigurace v `appsettings.json`). V produkci by mělo být `partner:8000`.
 
-#### **Z libovolného API stahovat zprávy, které se týkají položek získaných modulem burza za dané období**
-- **Chybí**:
-  - Zprávy jsou zatím statické v `/ui`. Potřebuješ volat `liststock` endpoint News modulu a stáhnout zprávy za dané období (např. 10 dní, podle `HistoryDays`).
+#### **Z libovolného API stahovat zprávy, které se týkají položek získaných modulem burza za dané období - za jaké období?**
+- **Částečně splněno**:
+  - `/ui` volá `liststock` a načítá zprávy, ale pouze jako fallback statických dat, pokud API selže.
+- **Chybí**: Dynamické propojení zpráv s položkami Burzy a specifikace období (např. 10 dní podle `HistoryDays`).
 
 #### **Mají málo zpráv k dispozici (UI pro všechny společně - kolik je málo - parametr)**
 - **Částečně splněno**:
-  - `MaxNewsItems` (50) je definováno v `appsettings.json` a omezení je implementováno v `/ui`.
-  - Logování "Not enough negative news" je přítomno, pokud je počet negativních zpráv pod `MinNewsCount` (3).
-- **Chybí**:
-  - Dynamické načítání zpráv z News modulu.
+  - `MaxNewsItems` (50) a `MinNewsCount` (3) jsou definovány v `appsettings.json`, a `/ui` kontroluje počet negativních zpráv.
+- **Chybí**: Dynamické vynucení limitů z News modulu.
 
 #### **Která mají negativní hodnocení, jak s 0?**
 - **Splněno**:
-  - `/ui` filtruje negativní zprávy (`Rating < 0`) a zohledňuje 0 jako neutrální (není považováno za negativní).
+  - `/ui` filtruje negativní zprávy (`Rating < 0`) a 0 je považováno za neutrální.
 
 #### **Mapování hodnocení na int <-10, 10>**
 - **Splněno**:
-  - `Item.cs` má `[Range(-10, 10)]` pro `Rating`.
+  - `Item.cs` kontroluje rozsah v `setRating` (výjimka při mimo -10 až 10).
 
 #### **Jak se hodnotí zprávy bez genAI**
 - **Chybí**:
-  - Zadání se ptá, jak se hodnotí zprávy bez generativní AI. Tvůj kód má statické zprávy s pevnými ratingy, ale reálné hodnocení by mělo přicházet z News modulu (`rating` endpoint). Potřebuješ specifikaci od zadání nebo implementaci vlastní logiky.
+  - Zadání požaduje specifikaci, jak se hodnotí zprávy bez generativní AI. Tvůj kód spoléhá na News modul (`rating`), ale nejsou uvedeny vlastní pravidla.
 
-#### **Co se stane pokud by přišlo hodnocení na firmu, která nebyla v původním seznamu**
+#### **Co se stane pokud by přišlo hodnocení na firmu, která nebyla v původním seznamu - validace zpráv**
 - **Splněno**:
-  - `SendToNewsModule` ignoruje firmy, které nejsou v `favorites`, a loguje varování (`_logger.LogWarning`).
+  - `SendToNewsModule` ignoruje firmy mimo `favorites` a loguje varování (`Received rating for unknown company`).
 
 #### **Jak se udržuje stav komunikace mezi Burzou a Zprávami, pokud je více klientů**
 - **Splněno**:
-  - `StateManager` (v `StateManager.cs`) používá `ConcurrentQueue` pro ukládání stavu komunikace (klient ID a data) pro více klientů.
+  - `StateManager` používá `ConcurrentQueue` pro ukládání stavu (clientId a položky) pro více klientů.
 
 #### **Pokud nemá položku s doporučením koupit, tak se nakoupí UI společné pro všechny položky - kolik se nakoupí**
 - **Splněno**:
-  - `SendToNewsModule` nakupuje `defaultBuyAmount` (z `appsettings.json`) akcií, pokud není doporučení k prodeji (`Sell = 0` nebo `null`).
-- **Chybí**:
-  - Zadání se ptá "kolik se nakoupí" – `defaultBuyAmount` je nastaven na 1, což je rozumná hodnota, ale může být upraveno podle potřeby.
+  - `SendToNewsModule` nakupuje `defaultBuyAmount` (výchozí 1 z `appsettings.json`) akcií, pokud `getSell()` je null nebo 0.
+- **Chybí**: Explicitní zobrazení nákupu v UI.
 
 #### **Timeouty pro čtení z externích REST - retry 5x po n sec**
 - **Splněno**:
-  - `FetchStockData` má retry mechanismus (5 pokusů, 2 sekundy prodleva, definováno v `RetryCount` a `RetryDelaySeconds`).
+  - `FetchStockData` má retry mechanismus (5 pokusů, 2 sekundy prodleva podle `RetryCount` a `RetryDelaySeconds`).
 
 #### **Limity na zprávy**
 - **Částečně splněno**:
   - `MaxNewsItems` a `MinNewsCount` jsou definovány, ale nejsou dynamicky vynuceny z News modulu.
-- **Chybí**:
-  - Reálné limity z externího API (např. `liststock`).
-
----
-
-### **Specifické problémy s HTTP/HTTPS (souvisí s předchozími hláškami)**
-- **Aktuální stav**:
-  - `launchSettings.json` má povolený HTTPS (profil `https` na portu 5001), ale HTTP je také dostupné (port 5000).
-  - V `Program.cs` je aktivní `app.UseHttpsRedirection()`, což znamená, že požadavky na HTTP budou přesměrovány na HTTPS.
-  - To způsobuje problémy, protože News modul je nastaven na HTTP (`http://localhost:8000`), a tvůj kód není plně nakonfigurován pro HTTPS (např. certifikáty nemusí být správně nastaveny).
-- **Splněno**:
-  - HTTP i HTTPS jsou technicky podporovány díky konfiguraci v `launchSettings.json`.
-- **Chybí**:
-  - Pro HTTPS potřebuješ správně nastavit certifikát (`dotnet dev-certs https --trust`) a zajistit, že News modul také běží na HTTPS. Jinak dojde ke konfliktu (Burza na HTTPS, News na HTTP).
-  - Doporučení: Pro vývoj zůstaň u HTTP, protože HTTPS přidává zbytečnou složitost (viz předchozí diskuze). To znamená zakomentovat `app.UseHttpsRedirection()` a použít pouze HTTP profil.
+- **Chybí**: Reálné limity z externího API.
 
 ---
 
 ### **Shrnutí**
-
-#### **Co je plně splněno**
-- Automatické a ruční získávání dat (interval 6 hodin, `/data`).
+#### **Splněno**
+- Periodické a ruční získávání dat (interval 6 hodin, `/data`).
+- Historická data (10 dní).
 - Definice a persistence oblíbených položek.
 - Filtrace podle 3 dní poklesu a >2 poklesů za 5 dní.
 - Komunikace s News modulem (poslání na `rating`, zpracování a odeslání na `salestock`).
-- Validace a logování špatných dat.
+- Doporučení k prodeji podle ratingu.
 - Responzivní UI.
-- Externalizovaná konfigurace.
+- Externalizovaná konfiguraci.
+- Validace a logování špatných dat.
 - Stav komunikace pro více klientů.
 - Nákup, pokud není doporučení k prodeji.
 - Retry mechanismus.
 - JSON struktura a mapování ratingů.
+- Ignorování neznámých firem.
+- Negativní hodnocení a neutrální 0.
 
-#### **Co je částečně splněno**
+#### **Částečně splněno**
 - Dynamické nastavení filtrů (statické v `appsettings.json`, chybí UI forma).
-- Běh mimo localhost (funguje s `0.0.0.0`, ale vyžaduje produkční nasazení).
-- CI/CD (Git je použit, chybí pipeline).
-- Zobrazení zpráv (statické, chybí dynamické načítání z `liststock`).
+- Běh mimo localhost (funguje s `0.0.0.0`, ale vyžaduje nasazení).
+- CI/CD (Git je použit, pipeline selhává kvůli pokrytí).
+- Zobrazení zpráv (dynamické načítání z `liststock`, ale s fallbackem).
 - Mazání úložiště (metoda existuje, chybí UI ovládání).
 - Limity na zprávy (definováno, ale ne dynamicky z News modulu).
-- HTTP/HTTPS (HTTPS je povoleno, ale není plně funkční kvůli News modulu na HTTP).
 
-#### **Co chybí**
-- Test coverage > 80 % (nutné přidat unit testy).
+#### **Chybí**
+- Test coverage > 80 % (testy nejsou implementovány).
 - Inkrementální stahování dat.
-- Dynamické načítání zpráv z News modulu (`liststock`).
+- Dynamické propojení zpráv s Burzou a specifikace období.
 - Specifikace hodnocení zpráv bez genAI.
 - Produkční nasazení mimo localhost.
-
----
-
-### **Doporučení pro další kroky**
-1. **HTTP/HTTPS**:
-   - Pro vývoj doporučuji zůstat u HTTP, aby se předešlo problémům s certifikáty a News modulem. Uprav `Program.cs`:
-     ```csharp
-     // app.UseHttpsRedirection(); // Zakomentuj tuto řádku
-     ```
-   - Pokud chceš HTTPS, News modul musí být také na HTTPS (`https://localhost:8000`), a musíš nastavit certifikát (`dotnet dev-certs https --trust`).
-
-2. **Dynamické načítání zpráv**:
-   - Uprav `/ui` endpoint v `Program.cs`, aby volal `liststock` endpoint News modulu:
-     ```csharp
-     var client = app.Services.GetRequiredService<IHttpClientFactory>().CreateClient();
-     var listStockUrl = config["NewsModule:ListStockEndpoint"] ?? "http://localhost:8000/liststock";
-     var response = await client.GetAsync(listStockUrl);
-     var newsItems = response.IsSuccessStatusCode
-         ? JsonSerializer.Deserialize<List<object>>(await response.Content.ReadAsStringAsync()) ?? new List<object>()
-         : new List<object>
-           {
-               new { Company = "Microsoft", News = "Positive earnings report", Rating = 8 },
-               new { Company = "Google", News = "Legal issues", Rating = -5 },
-               new { Company = "Apple", News = "Neutral update", Rating = 0 }
-           };
-     ```
-
-3. **Dynamické filtry**:
-   - Přidej do `/ui` formulář pro změnu `DeclineDays` a `MaxDeclines`, který by ukládal hodnoty do `appsettings.json` nebo do jiného souboru.
-
-4. **Testy**:
-   - Přidej unit testy (např. xUnit) pro `StockService` a `FavoritesManager`.
-
-5. **CI/CD**:
-   - Nastav GitHub Actions pro automatické buildování a testování.
+- Dynamické zobrazení nákupu v UI.
