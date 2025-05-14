@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
+using STIN_BurzaModule;
 
 namespace StockModule.Pages
 {
@@ -17,6 +18,25 @@ namespace StockModule.Pages
         private static Dictionary<string, decimal> _stockPrices = new();
         private readonly IHttpClientFactory _httpClientFactory;
         private const string ApiKey = "LZGQZFV49DMW7M3J"; // Nahraď skutečným klíčem (Alpha Vantage/Yahoo Finance)
+        private static readonly string FavoritesFilePath = Path.Combine("Data", "favorites.json");
+
+        public List<Item> GetStockItemsAsJson()
+        {
+            var items = new List<Item>();
+
+            foreach (var stock in _stockPrices)
+            {
+                items.Add(new Item
+                {
+                    Name = stock.Key,
+                    Date = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds(),
+                    Rating = null,
+                    Sell = null
+                });
+            }
+
+            return items;
+        }
 
         [BindProperty]
         public string? NewItem { get; set; }
@@ -32,6 +52,7 @@ namespace StockModule.Pages
 
         public void OnGet()
         {
+            LoadFavoritesFromFile();
             Log("Načtení stránky Index");
         }
 
@@ -104,6 +125,7 @@ namespace StockModule.Pages
                     Log($"Položka přidána: {itemToAdd}");
                 }
             }
+            SaveFavoritesToFile();
             return RedirectToPage();
         }
 
@@ -114,6 +136,7 @@ namespace StockModule.Pages
                 _favoriteItems.Remove(item);
                 Log($"Položka odebrána: {item}");
             }
+            SaveFavoritesToFile();
             return RedirectToPage();
         }
 
@@ -122,6 +145,41 @@ namespace StockModule.Pages
             _logBuilder.Clear();
             Log("Log byl vymazán");
             return RedirectToPage();
+        }
+
+
+        private void LoadFavoritesFromFile()
+        {
+            try
+            {
+                if (System.IO.File.Exists(FavoritesFilePath))
+                {
+                    var json = System.IO.File.ReadAllText(FavoritesFilePath);
+                    var list = System.Text.Json.JsonSerializer.Deserialize<List<string>>(json);
+                    if (list != null)
+                    {
+                        _favoriteItems = list;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log($"Chyba při načítání oblíbených: {ex.Message}");
+            }
+        }
+
+        private void SaveFavoritesToFile()
+        {
+            try
+            {
+                var json = System.Text.Json.JsonSerializer.Serialize(_favoriteItems, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+                Directory.CreateDirectory(Path.GetDirectoryName(FavoritesFilePath)!);
+                System.IO.File.WriteAllText(FavoritesFilePath, json);
+            }
+            catch (Exception ex)
+            {
+                Log($"Chyba při ukládání oblíbených: {ex.Message}");
+            }
         }
 
 

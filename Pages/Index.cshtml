@@ -144,6 +144,43 @@
         </tr>
     }
 
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <i class="fas fa-filter"></i> Filtrované akcie
+                </div>
+                <div class="card-body">
+                    <form id="filterForm" class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Dny poklesu:</label>
+                            <input type="number" name="declineDays" class="form-control" value="3" min="1">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Max poklesů:</label>
+                            <input type="number" name="maxDeclines" class="form-control" value="2" min="0">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Období (dny):</label>
+                            <input type="number" name="lookbackDays" class="form-control" value="5" min="1">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Min zpráv:</label>
+                            <input type="number" name="minNewsCount" class="form-control" value="3" min="0">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-filter"></i> Filtrovat
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="filteredResults" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Automatický scroll logu dolů
@@ -168,6 +205,40 @@
                 });
             }
         }
+
+
+                document.getElementById('filterForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(this);
+                const params = new URLSearchParams(formData).toString();
+
+                const response = await fetch(`/filtered-stocks?${params}`);
+                const data = await response.json();
+
+                let html = '<div class="table-responsive"><table class="table table-striped">';
+                html += '<thead><tr><th>Symbol</th><th>Rating</th><th>Doporučení</th><th>Počet zpráv</th></tr></thead><tbody>';
+
+                data.forEach(item => {
+                    const recommendation = item.sell === 1 ? 'Prodat' : 'Držet';
+                    const ratingClass = item.rating > 5 ? 'text-success' : item.rating < -5 ? 'text-danger' : '';
+
+                    html += `<tr>
+                        <td>${item.name}</td>
+                        <td class="${ratingClass}">${item.rating}</td>
+                        <td>${recommendation}</td>
+                        <td>${item.newsCount}</td>
+                    </tr>`;
+
+                    // Add news items if available
+                    if (item.newsItems && item.newsItems.length > 0) {
+                        html += `<tr><td colspan="4"><small>${item.newsItems.join('<br>')}</small></td></tr>`;
+                    }
+                });
+
+                html += '</tbody></table></div>';
+                document.getElementById('filteredResults').innerHTML = html;
+            });
     </script>
 </body>
 </html>

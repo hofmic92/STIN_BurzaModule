@@ -38,6 +38,22 @@
                         var model = scope.ServiceProvider.GetRequiredService<IndexModel>();
                         await model.FetchDataInternal();
                         _logger.LogInformation("Automatické stahování dokončeno");
+
+                        // Send data after fetch
+                        var httpClientFactory = scope.ServiceProvider.GetRequiredService<IHttpClientFactory>();
+                        var client = httpClientFactory.CreateClient();
+                        var items = model.GetStockItemsAsJson();
+
+                        try
+                        {
+                            var response = await client.PostAsJsonAsync("https://stinnews-cpaeakbfgkdpe0ae.westeurope-01.azurewebsites.net/UserDashboard", items);
+                            response.EnsureSuccessStatusCode();
+                            _logger.LogInformation("Data úspěšně odeslána");
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "Chyba při odesílání dat");
+                        }
                     }
                 }
                 catch (Exception ex)
