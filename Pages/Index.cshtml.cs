@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
 using STIN_BurzaModule;
+using STIN_BurzaModule.DataModel;
 
 namespace StockModule.Pages
 {
@@ -20,22 +21,32 @@ namespace StockModule.Pages
         private const string ApiKey = "LZGQZFV49DMW7M3J"; // Nahraď skutečným klíčem (Alpha Vantage/Yahoo Finance)
         private static readonly string FavoritesFilePath = Path.Combine("Data", "favorites.json");
 
-        public List<Item> GetStockItemsAsJson()
+        /*public List<DataModel> GetStockItems()
         {
-            var items = new List<Item>();
+            var items = new List<DataModel>();
 
             foreach (var stock in _stockPrices)
             {
-                items.Add(new Item
+                items.Add(new DataModel
                 {
                     Name = stock.Key,
                     Date = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds(),
-                    Rating = null,
-                    Sell = null
+                    Rating = 0,
+                    Sell = 0
                 });
             }
 
             return items;
+        }*/
+
+        public List<DataModel> GetStockItems()
+        {
+            return new List<DataModel>
+    {
+        new DataModel { Name = "JoeMama", Date = 12345678, Rating = -10, Sell = 1 },
+        new DataModel { Name = "Google", Date = 12345678, Rating = 10, Sell = 0 },
+        new DataModel { Name = "OpenAI", Date = 12345678, Rating = 2, Sell = 0 }
+    };
         }
 
         [BindProperty]

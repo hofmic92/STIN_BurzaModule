@@ -42,7 +42,7 @@
                         // Send data after fetch
                         var httpClientFactory = scope.ServiceProvider.GetRequiredService<IHttpClientFactory>();
                         var client = httpClientFactory.CreateClient();
-                        var items = model.GetStockItemsAsJson();
+                        var items = model.GetStockItems();
 
                         try
                         {
