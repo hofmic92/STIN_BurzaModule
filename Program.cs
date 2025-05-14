@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using STIN_BurzaModule;
-using STIN_BurzaModule.DataModel;
-using StockModule.Pages;
+using STIN_BurzaModule.Services;
 using System.Text;
 using System.Text.Json;
-using STIN_BurzaModule.DataModel;
-using STIN_BurzaModule.Pages;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +36,7 @@ app.UseAuthorization();
 // Endpointy
 app.MapGet("/neco", () =>
 {
-    List<DataModel> items = new List<DataModel>
+    List<Item> items = new List<Item>
     {
         new Item("Microsoft", 1713960000, 0) { Rating = null, Sell = null }
     };
@@ -47,101 +45,88 @@ app.MapGet("/neco", () =>
 .WithName("GetItems")
 .WithOpenApi();
 
-
-var url = "https://stinnews-cpaeakbfgkdpe0ae.westeurope-01.azurewebsites.net/rating";
-
-app.MapPost("/liststock-static", async () =>
+app.MapGet("/stock-data", async (HttpContext context) =>
 {
+    var httpClientFactory = context.RequestServices.GetRequiredService<IHttpClientFactory>();
+    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+    const string apiKey = "LZGQZFV49DMW7M3J";
+    var symbols = new List<string> { "AAPL", "MSFT", "GOOGL" };
 
-    //var items = GetStockItems();
+    var items = new List<Item>();
+    var client = httpClientFactory.CreateClient();
 
-
-    string jsonString = @"[
+    foreach (var symbol in symbols)
     {
-        ""name"": ""JoeMama"", 
-        ""date"": 12345678, 
-        ""rating"": -10, 
-        ""sell"": 1
-    },
-    {
-        ""name"": ""Google"", 
-        ""date"": 12345678, 
-        ""rating"": 10, 
-        ""sell"": 0
-    },
-    {
-
-        ""name"": ""OpenAI"", 
-        ""date"": 12345678, 
-        ""rating"": 2, 
-        ""sell"": 0
-
+        try
+        {
+            string apiUrl = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={apiKey}";
+            var response = await client.GetStringAsync(apiUrl);
+            var json = System.Text.Json.JsonDocument.Parse(response).RootElement;
+            var priceStr = json.GetProperty("Global Quote").GetProperty("05. price").GetString();
+            if (decimal.TryParse(priceStr, out _))
+            {
+                items.Add(new Item(symbol, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds(), 0));
+                logger.LogInformation($"Successfully fetched {symbol}");
+            }
+            else
+            {
+                logger.LogWarning($"Failed to parse data for {symbol}");
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, $"Error fetching data for {symbol}");
+        }
     }
-]";
 
+    return Results.Json(items, new JsonSerializerOptions
+    {
+        WriteIndented = true,
+        Converters = { new ItemJsonConverter() }
+    });
+})
+.WithName("GetStockData")
+.WithOpenApi();
 
-    List<DataModel> data = JsonSerializer.Deserialize<List<DataModel>>(jsonString);
-    return Results.Ok(data);
-});
-
-
-
-app.MapPost("/salestock-static", async () =>
+app.MapPost("/send-stock-data", async (HttpContext context, IServiceProvider services) =>
 {
+    using var scope = services.CreateScope();
+    var model = scope.ServiceProvider.GetRequiredService<IndexModel>();
+    var url = "https://stinnews-cpaeakbfgkdpe0ae.westeurope-01.azurewebsites.net/UserDashboard";
 
+    await model.FetchDataInternal();
+    var items = model.GetStockItemsAsJson();
+    var json = JsonSerializer.Serialize(items, new JsonSerializerOptions
+    {
+        WriteIndented = true,
+        Converters = { new ItemJsonConverter() }
+    });
 
-    //var items = GetStockItems();
+    var httpClientFactory = scope.ServiceProvider.GetRequiredService<IHttpClientFactory>();
+    var client = httpClientFactory.CreateClient();
+    var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-    string jsonString = @"[
+    try
     {
-        ""name"": ""JoeMama"", 
-        ""date"": 12345678, 
-        ""rating"": -10, 
-        ""sell"": 1
-    },
-    {
-        ""name"": ""Google"", 
-        ""date"": 12345678, 
-        ""rating"": 10, 
-        ""sell"": 0
-    },
-    {
-        ""name"": ""OpenAI"", 
-        ""date"": 12345678, 
-        ""rating"": 2, 
-        ""sell"": 0
+        var response = await client.PostAsync(url, content);
+        response.EnsureSuccessStatusCode();
+        return Results.Ok("Data successfully sent");
     }
-]";
-
-    List<DataModel> data = JsonSerializer.Deserialize<List<DataModel>>(jsonString);
-
-
-    return Results.Ok(data);
-
-
-});
-
-
-
-
-
-// Fetch latest data
-//await model.FetchDataInternal();
-
-// Get data in JSON format
-//var items = model.GetStockItems();
-//Console.WriteLine(items);
-//onsole.WriteLine("kkkkkkkkkkkkkkkk");
-
-
-
-
+    catch (Exception ex)
+    {
+        return Results.Problem($"Failed to send data: {ex.Message}");
+    }
+})
+.WithName("SendStockData")
+.WithOpenApi();
 
 app.MapRazorPages();
+app.Run();
 
-app.Run(); // Spuštění aplikace
-
-// Supporting classes
-
-
-
+// Supporting class
+public class StockDay
+{
+    public DateTime Date { get; set; }
+    public decimal ClosePrice { get; set; }
+    public decimal Change { get; set; }
+}
