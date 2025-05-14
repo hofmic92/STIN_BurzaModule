@@ -1,6 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Data",
+    "\\Filters",
+    "\\Pages",
+    "\\Properties",
+    "\\Services"
   ],
+  "SelectedNode": "\\Filters\\UserFilterSettings.cs",
   "PreviewInSolutionExplorer": false
 }
