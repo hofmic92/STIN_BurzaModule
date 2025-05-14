@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using STIN_BurzaModule.Services;
 using Microsoft.AspNetCore.Diagnostics;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +27,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection(); //odkomentovat pøi použití https !!!!!!!!!!!!!!!!
 
 // Pøidání middleware pro zpracování výjimek
 app.UseExceptionHandler(errorApp =>
@@ -66,18 +67,25 @@ app.MapGet("/data", async (StockService stockService, HttpRequest request, Cance
 .WithOpenApi();
 
 // Endpoint pro UI (vèetnì správy oblíbených, nastavení filtrù a zobrazení zpráv)
-app.MapGet("/ui", async (FavoritesManager favoritesManager, StockService stockService, IConfiguration config, ILogger<Program> logger) =>
+app.MapGet("/ui", async (FavoritesManager favoritesManager, StockService stockService, IConfiguration config, ILogger<Program> logger, IHttpClientFactory httpClientFactory) =>
 {
     var favorites = favoritesManager.GetFavorites();
     var declineDays = config.GetValue<int>("UserSettings:DeclineDays", 3);
     var maxDeclines = config.GetValue<int>("UserSettings:MaxDeclines", 2);
     var maxNewsItems = config.GetValue<int>("NewsApi:MaxNewsItems", 50);
-    var newsItems = new List<object>
-    {
-        new { Company = "Microsoft", News = "Positive earnings report", Rating = 8 },
-        new { Company = "Google", News = "Legal issues", Rating = -5 },
-        new { Company = "Apple", News = "Neutral update", Rating = 0 }
-    }.Take(maxNewsItems).ToList();
+
+    // Volání News modulu pro zprávy
+    var client = httpClientFactory.CreateClient();
+    var listStockUrl = config["NewsModule:ListStockEndpoint"] ?? "http://localhost:8000/liststock";
+    var newsResponse = await client.GetAsync(listStockUrl);
+    var newsItems = newsResponse.IsSuccessStatusCode
+        ? JsonSerializer.Deserialize<List<object>>(await newsResponse.Content.ReadAsStringAsync()) ?? new List<object>()
+        : new List<object>
+          {
+              new { Company = "Microsoft", News = "Positive earnings report", Rating = 8 },
+              new { Company = "Google", News = "Legal issues", Rating = -5 },
+              new { Company = "Apple", News = "Neutral update", Rating = 0 }
+          }.Take(maxNewsItems).ToList();
 
     var negativeNews = newsItems.Where(n => (int)n.GetType().GetProperty("Rating").GetValue(n) < 0).ToList();
     if (negativeNews.Count < config.GetValue<int>("UserSettings:MinNewsCount", 3))
@@ -85,23 +93,21 @@ app.MapGet("/ui", async (FavoritesManager favoritesManager, StockService stockSe
         logger.LogWarning("Not enough negative news available.");
     }
 
-    // Zpracování akcí pro pøidání/odebrání oblíbených
-    if (favoritesManager != null)
+    // Zpracování akcí pro pøidání/odebrání oblíbených (stejné jako døív)
+    var action = config["Favorites:Action"];
+    var companyName = config["Favorites:CompanyName"];
+    if (action == "add" && !string.IsNullOrEmpty(companyName))
     {
-        var action = config["Favorites:Action"];
-        var companyName = config["Favorites:CompanyName"];
-        if (action == "add" && !string.IsNullOrEmpty(companyName))
-        {
-            favoritesManager.AddFavorite(companyName);
-            favorites = favoritesManager.GetFavorites(); // Aktualizace seznamu
-        }
-        else if (action == "remove" && !string.IsNullOrEmpty(companyName))
-        {
-            favoritesManager.RemoveFavorite(companyName);
-            favorites = favoritesManager.GetFavorites(); // Aktualizace seznamu
-        }
+        favoritesManager.AddFavorite(companyName);
+        favorites = favoritesManager.GetFavorites();
+    }
+    else if (action == "remove" && !string.IsNullOrEmpty(companyName))
+    {
+        favoritesManager.RemoveFavorite(companyName);
+        favorites = favoritesManager.GetFavorites();
     }
 
+    // Vygenerování HTML (stejné jako døív, jen s aktualizovanými zprávami)
     return Results.Content($@"
         <!DOCTYPE html>
         <html lang='en'>
@@ -162,8 +168,7 @@ app.MapGet("/ui", async (FavoritesManager favoritesManager, StockService stockSe
                     }}
                 }}
 
-                async function removeFavorite(company) {{
-                    window.location.href = '/ui?action=remove&companyName=' + encodeURIComponent(company);
+                async function removeFavorite(company) {{window.location.href = '/ui?action=remove&companyName=' + encodeURIComponent(company);
                 }}
             </script>
         </body>

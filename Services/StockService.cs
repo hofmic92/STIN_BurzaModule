@@ -36,12 +36,23 @@ public class StockService
                 var validItems = new List<Item>();
                 foreach (var item in items ?? new List<Item>())
                 {
-                    if (string.IsNullOrEmpty(item.Name) || item.Rating.HasValue && (item.Rating < -10 || item.Rating > 10) || item.Sell.HasValue && (item.Sell != 0 && item.Sell != 1))
+                    try
                     {
-                        _logger.LogWarning($"Invalid item data: {JsonSerializer.Serialize(item)}. Ignoring.");
+                        // Přizpůsobíme validaci podle getterů
+                        if (string.IsNullOrEmpty(item.getName()) ||
+                            item.getRating().HasValue && (item.getRating() < -10 || item.getRating() > 10) ||
+                            item.getSell().HasValue && (item.getSell() != 0 && item.getSell() != 1))
+                        {
+                            _logger.LogWarning($"Invalid item data: {JsonSerializer.Serialize(item)}. Ignoring.");
+                            continue;
+                        }
+                        validItems.Add(item);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning($"Validation failed for item: {JsonSerializer.Serialize(item)}. Ignoring. Error: {ex.Message}");
                         continue;
                     }
-                    validItems.Add(item);
                 }
                 return validItems;
             }
@@ -66,7 +77,7 @@ public class StockService
 
         foreach (var item in items ?? new List<Item>())
         {
-            var historicalDataUrl = $"{_config["StockApi:BaseUrl"]}/{item.Name}/history?days={historyDays}";
+            var historicalDataUrl = $"{_config["StockApi:BaseUrl"]}/{item.getName()}/history?days={historyDays}";
             try
             {
                 var response = await client.GetAsync(historicalDataUrl, stoppingToken);
@@ -91,7 +102,7 @@ public class StockService
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Failed to fetch historical data for {item.Name}.");
+                _logger.LogError(ex, $"Failed to fetch historical data for {item.getName()}.");
             }
         }
         return filteredItems;
@@ -123,21 +134,24 @@ public class StockService
 
             foreach (var item in ratedItems)
             {
-                if (!favorites.Contains(item.Name))
+                if (!favorites.Contains(item.getName()))
                 {
-                    _logger.LogWarning($"Received rating for unknown company {item.Name}. Ignoring.");
+                    _logger.LogWarning($"Received rating for unknown company {item.getName()}. Ignoring.");
                     continue;
                 }
 
-                if (item.Rating > userRatingThreshold)
+                if (item.getRating().HasValue && item.getRating() > userRatingThreshold)
                 {
-                    item.Sell = 1;
+                    item.setSell(); // Použijeme setter podle logiky v Item.cs
                     itemsToSell.Add(item);
                 }
-                else if (item.Sell == null || item.Sell == 0)
+                else if (!item.getSell().HasValue || item.getSell() == 0)
                 {
-                    itemsToBuy.Add(new Item { Name = item.Name, Date = item.Date, Rating = item.Rating, Sell = 0 });
-                    _logger.LogInformation($"Buying {defaultBuyAmount} shares of {item.Name} as no sell recommendation exists.");
+                    var newItem = new Item(item.getName(), item.getDate());
+                    newItem.setRating(item.getRating() ?? 0); // Předpokládáme výchozí hodnotu 0
+                    newItem.setSell();
+                    itemsToBuy.Add(newItem);
+                    _logger.LogInformation($"Buying {defaultBuyAmount} shares of {item.getName()} as no sell recommendation exists.");
                 }
             }
 

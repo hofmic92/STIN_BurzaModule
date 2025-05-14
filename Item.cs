@@ -4,16 +4,77 @@ namespace STIN_BurzaModule
 {
     public class Item
     {
-        [Required]
-        public required string Name { get; set; } // Používá required místo nullability
+        private int maxrating = 10;
+        private int minrating = -10;
+        private int sellvalue = 1;
+        private string Name { get; set; }
+        private long Date { get; set; } //UNIX timestamp
+        private int? Rating { get; set; }
+        private int? Sell { get; set; }
 
-        [Required]
-        public long Date { get; set; } // UNIX timestamp
+        //gettery
+        public string getName()
+        {
+            return Name;
+        }
+        public long getDate()
+        {
+            return Date;
+        }
+        public int? getRating()
+        {
+            return Rating;
+        }
+        public int? getSell()
+        {
+            return Sell;
+        }
 
-        [Range(-10, 10, ErrorMessage = "Rating must be between -10 and 10.")]
-        public int? Rating { get; set; }
 
-        [Range(0, 1, ErrorMessage = "Sell must be 0 or 1.")]
-        public int? Sell { get; set; }
+        public Item(string name, long date)
+        {
+            this.Name = name;
+            this.Date = date;
+        }
+        //settery
+        public void setSell()
+        {
+            if (Sell >= sellvalue)
+            {
+                Sell = 1;
+            }
+            else
+            {
+                Sell = 0;
+            }
+        }
+        public void setRating(int rating)
+        {
+            if (rating > minrating && rating < maxrating)
+            {
+                this.Rating = rating;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException(nameof(rating),
+            $"Rating must be between {minrating} and {maxrating}. Given: {rating}");
+            }
+        }
+
+        public void setMaxrating(int maxrating)
+        {
+            this.maxrating = maxrating;
+        }
+        public void setMinrating(int minrating)
+        {
+            this.minrating = minrating;
+        }
+        public void setSellValue(int value)
+        {
+            this.Sell = value;
+        }
     }
+
+
+
 }
