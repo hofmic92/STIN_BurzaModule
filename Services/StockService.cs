@@ -4,6 +4,8 @@ using STIN_BurzaModule;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using STIN_BurzaModule.DataModel;
+using System.Text.Json;
 
 namespace STIN_BurzaModule.Services;
 
@@ -108,7 +110,7 @@ public class StockService
         var jsonData = System.Text.Json.JsonSerializer.Serialize(items, new JsonSerializerOptions
         {
             WriteIndented = true,
-            Converters = { new ItemJsonConverter() }
+            //Converters = { new ItemJsonConverter() }
         });
         return await _communicationManager.ProcessStocksAsync(jsonData, stoppingToken);
     }

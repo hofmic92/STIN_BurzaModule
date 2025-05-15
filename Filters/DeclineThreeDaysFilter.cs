@@ -11,35 +11,40 @@ namespace STIN_BurzaModule
         {
             var result = new List<Item>();
 
-            // Skupiny podle jména firmy
             var grouped = items.GroupBy(i => i.getName());
 
             foreach (var group in grouped)
             {
+                // Vezmi posledních 3 pracovních dnů, seřazené chronologicky
                 var ordered = group
-                    .OrderByDescending(i => i.getDate())
+                    .OrderBy(i => i.getDate())
                     .Where(i => IsWorkingDay(UnixTimeToDateTime(i.getDate())))
-                    .Take(3)
+                    .TakeLast(3)
                     .ToList();
 
                 if (ordered.Count < 3)
                 {
+                    // Pokud nemáme dost dat, firmu nefiltrujeme
                     result.AddRange(group);
                     continue;
                 }
 
-                bool allDeclined = true;
+                bool declined = true;
                 for (int i = 1; i < ordered.Count; i++)
                 {
                     if (ordered[i].getPrice() >= ordered[i - 1].getPrice())
                     {
-                        allDeclined = false;
+                        declined = false;
                         break;
                     }
                 }
 
-                if (!allDeclined)
-                    result.AddRange(group); // firma zůstává
+                if (!declined)
+                {
+                    // Firma neklesala 3 dny po sobě ⇒ necháme všechny její záznamy
+                    result.AddRange(group);
+                }
+                // Jinak firmu vynecháme
             }
 
             return result;

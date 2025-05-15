@@ -1,4 +1,4 @@
-﻿namespace STIN_BurzaModule
+﻿namespace STIN_BurzaModule.Services
 {
     using Microsoft.Extensions.Hosting;
     using System.Threading;
