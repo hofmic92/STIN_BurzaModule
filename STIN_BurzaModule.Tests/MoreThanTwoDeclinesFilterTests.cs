@@ -1,35 +1,47 @@
-using STIN_BurzaModule;
+﻿using STIN_BurzaModule;
 using STIN_BurzaModule.Filters;
 using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace STIN_BurzaModule.Tests
+public class MoreThanTwoDeclinesFilterTests
 {
-    public class MoreThanTwoDeclinesFilterTests
+    private long UnixDaysAgo(int days) =>
+        new DateTimeOffset(DateTime.UtcNow.Date.AddDays(-days)).ToUnixTimeSeconds();
+
+    [Fact]
+    public void FirmWithMoreThanTwoDeclines_IsFilteredOut()
     {
-        [Fact]
-        public void Filter_RemovesFirmWithMoreThanTwoDeclines()
+        var filter = new MoreThanTwoDeclinesFilter();
+
+        var prices = new[] { 140, 130, 120, 110, 100, 95, 90, 85 }; // 6 poklesů
+        var items = new List<Item>();
+
+        for (int i = 0; i < prices.Length; i++)
         {
-            var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            var items = new List<Item>
-            {
-                new Item("FirmX", now - 86400 * 5, 0) { Price = 120 },
-                new Item("FirmX", now - 86400 * 4, 0) { Price = 115 },
-                new Item("FirmX", now - 86400 * 3, 0) { Price = 110 },
-                new Item("FirmX", now - 86400 * 2, 0) { Price = 100 },
-                new Item("FirmX", now - 86400 * 1, 0) { Price = 90 },
-
-                new Item("FirmY", now - 86400 * 3, 0) { Price = 100 },
-                new Item("FirmY", now - 86400 * 2, 0) { Price = 105 },
-                new Item("FirmY", now - 86400 * 1, 0) { Price = 110 }
-            };
-
-            var filter = new MoreThanTwoDeclinesFilter();
-            var result = filter.filter(items);
-
-            Assert.DoesNotContain(result, i => i.getName() == "FirmX");
-            Assert.Contains(result, i => i.getName() == "FirmY");
+            items.Add(new Item("Apple", UnixDaysAgo(prices.Length - i), prices[i]));
         }
+
+        var result = filter.filter(items);
+
+        Assert.DoesNotContain(result, i => i.getName() == "Apple");
+    }
+
+    [Fact]
+    public void FirmWithMaxTwoDeclines_IsNotFiltered()
+    {
+        var filter = new MoreThanTwoDeclinesFilter();
+
+        var prices = new[] { 100, 101, 99, 102, 103, 104, 105, 106 }; // 2 poklesy
+        var items = new List<Item>();
+
+        for (int i = 0; i < prices.Length; i++)
+        {
+            items.Add(new Item("Google", UnixDaysAgo(prices.Length - i), prices[i]));
+        }
+
+        var result = filter.filter(items);
+
+        Assert.Contains(result, i => i.getName() == "Google");
     }
 }
