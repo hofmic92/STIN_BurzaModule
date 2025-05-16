@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup .NET Core
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
@@ -21,13 +21,13 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore ./BurzaModule.sln
 
-      - name: Build project
+      - name: Build solution
         run: dotnet build ./BurzaModule.sln --configuration Release --no-restore
 
       - name: Run tests
         run: dotnet test ./BurzaModule.Tests/BurzaModule.Tests.csproj --no-build --verbosity normal
 
-      - name: Publish project
+      - name: Publish web project
         run: dotnet publish ./STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
 
       - name: Deploy to Azure Web App
@@ -36,8 +36,3 @@ jobs:
           app-name: 'STINBurzaModule20250514183057'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ./publish
-
-        run: dotnet restore ./STIN_BurzaModule.sln
-
-      - name: Build project
-        run: dotnet build ./STIN_BurzaModule.sln --configuration Release --no-restore
