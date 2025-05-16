@@ -61,11 +61,18 @@ namespace STIN_BurzaModule.Tests
         public void OnPostRemoveItem_RemovesItem_AndRedirects()
         {
             var model = CreateModel();
-            SetField(model, "_favoriteItems", new List<string> { "AAPL", "TSLA" });
+
+            // Nastaví statické pole
+            typeof(IndexModel)
+                .GetField("_favoriteItems", BindingFlags.NonPublic | BindingFlags.Static)
+                ?.SetValue(null, new List<string> { "AAPL", "TSLA" });
 
             var result = model.OnPostRemoveItem("TSLA");
 
-            var list = GetField<List<string>>(model, "_favoriteItems");
+            var list = typeof(IndexModel)
+                .GetField("_favoriteItems", BindingFlags.NonPublic | BindingFlags.Static)
+                ?.GetValue(null) as List<string>;
+
             Assert.DoesNotContain("TSLA", list);
             Assert.Contains("AAPL", list);
             Assert.IsType<RedirectToPageResult>(result);
