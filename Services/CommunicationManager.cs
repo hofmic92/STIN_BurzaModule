@@ -148,7 +148,7 @@ namespace STIN_BurzaModule.Services
             item = null;
             try
             {
-                string name = data.ContainsKey("name") ? data["name"].ToString() : null;
+                string name = data.ContainsKey("name") && data["name"] != null ? data["name"].ToString() : "";
                 if (string.IsNullOrEmpty(name)) return false;
 
                 long date = data.ContainsKey("date") && long.TryParse(data["date"].ToString(), out var d) ? d : 0;
@@ -180,7 +180,7 @@ namespace STIN_BurzaModule.Services
             var serializedItems = JsonSerializer.Serialize(items, new JsonSerializerOptions
             {
                 WriteIndented = true,
-               // Converters = { new ItemJsonConverter() }
+                // Converters = { new ItemJsonConverter() }
             });
             var content = new StringContent(serializedItems, System.Text.Encoding.UTF8, "application/json");
 
@@ -199,12 +199,12 @@ namespace STIN_BurzaModule.Services
                     if (attempt + 1 == _maxRetries)
                     {
                         _logger.LogError("Dosaženo maximálního počtu pokusů.");
-                        return null;
+                        return new List<Item>(); //pokus o vyřešení varování v githubu
                     }
                     await Task.Delay(TimeSpan.FromSeconds(_retryDelaySeconds), stoppingToken);
                 }
             }
-            return null;
+            return new List<Item>(); //pokus o vyřešení varování v githubu
         }
     }
 

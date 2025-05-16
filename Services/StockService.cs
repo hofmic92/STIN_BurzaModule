@@ -73,7 +73,7 @@ public class StockService
         item = null;
         try
         {
-            string name = data.ContainsKey("name") ? data["name"].ToString() : null;
+            string name = data.ContainsKey("name") ? data["name"].ToString() : "";
             if (string.IsNullOrEmpty(name)) return false;
 
             long date = data.ContainsKey("date") && long.TryParse(data["date"].ToString(), out var d) ? d : 0;

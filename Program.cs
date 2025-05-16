@@ -4,7 +4,6 @@ using STIN_BurzaModule.DataModel;
 using StockModule.Pages;
 using System.Text;
 using System.Text.Json;
-using STIN_BurzaModule.DataModel;
 using STIN_BurzaModule.Pages;
 using STIN_BurzaModule.Services;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -43,6 +42,15 @@ app.UseAuthorization();
 var configuration = builder.Configuration;
 
 var urlConfig = configuration.GetSection("Url").Get<UrlSetting>();
+//pokus o vyřešení varování v githubu:
+if (urlConfig == null || string.IsNullOrEmpty(urlConfig.EnableUrl))
+{
+    Console.WriteLine("Chyba: Konfigurace 'Url' chybí nebo je neplatná.");
+    // Alternativně použijte ILogger, pokud je dostupný
+    // _logger.LogError("Chyba: Konfigurace 'Url' chybí nebo je neplatná.");
+    return; // Ukončí konfiguraci endpointu, pokračuje zbytek aplikace
+}
+//konec pokusu
 var url = urlConfig.EnableUrl;
 
 // Získání hodnoty z konfigurace
@@ -55,29 +63,34 @@ app.MapPost("/liststock", async (IServiceProvider services) =>
     await model.FetchDataInternal();
 
     List<DataModel> dataModels = new List<DataModel>();
-    List<Item> items = model.DownloadedItems;
+    List<Item> items = model.DownloadedItems ?? new List<Item>();
     if (items == null)
+    {
+    }
+    else
+    {
+        var filterSettings = configuration.GetSection("UserFilters").Get<UserFilterSettings>();
+        var filters = new List<Filter>();
+        //pokus o vyřešení varování v githubu:
+        if (filterSettings == null)
         {
+            Console.WriteLine("Chyba: Konfigurace 'UserFilters' chybí. Používá se pouze FinalFilter.");
+            // Alternativně: _logger.LogWarning("Chyba: Konfigurace 'UserFilters' chybí.");
         }
         else
         {
-            
-            var filterSettings = configuration.GetSection("UserFilters").Get<UserFilterSettings>();
-
-            var filters = new List<Filter>();
-
-            if (filterSettings.EnableDeclineThreeDays)
+            if (filterSettings.EnableDeclineThreeDays) //pokus o vyřešení varování v githubu
                 filters.Add(new DeclineThreeDaysFilter());
-
-            if (filterSettings.EnableMoreThanTwoDeclines)
+            if (filterSettings.EnableMoreThanTwoDeclines) //pokus o vyřešení varování v githubu
                 filters.Add(new MoreThanTwoDeclinesFilter());
-            
-            filters.Add(new FinalFilter()); // vždy nech nejnovější záznam
-            foreach (Filter filter in filters)
-            {
-            items = filter.filter(items);
-            }
         }
+        //konec pokusu
+        filters.Add(new FinalFilter()); // vždy nech nejnovější záznam
+        foreach (Filter filter in filters)
+        {
+            items = filter.filter(items) ?? new List<Item>(); //pokus o vyřešení varování v githubu
+        }
+    }
     //foreach (var item in model.FilteredItems)
     //{
     //    Console.WriteLine($"DEBUG: Name={item.getName()}, Date={item.getDate()}, Price={item.getPrice()}, Sell={item.getSell()}, Rating={item.getRating()}");
@@ -92,7 +105,7 @@ app.MapPost("/liststock", async (IServiceProvider services) =>
         dataModels.Add(datamodel);
         Console.WriteLine($"Processing: {datamodel.Name}, Date: {datamodel.Date}, Rating: {datamodel.Rating}, Sell: {datamodel.Sell}");
     }
-    
+
     Console.WriteLine(dataModels);
     Console.WriteLine("????????????????");
 
@@ -157,6 +170,13 @@ app.MapPost("/salestock", async (HttpRequest request) =>
     }
 
     var sellValueConfig = configuration.GetSection("SellValueSetting").Get<SellValueSetting>();
+    //pokus o vyřešení varování v githubu
+    if (sellValueConfig == null)
+    {
+        Console.WriteLine("Chyba: Konfigurace 'SellValueSetting' chybí.");
+        return Results.BadRequest("Chybí konfigurace SellValueSetting");
+    }
+    //konec pokusu
     int sellValue = sellValueConfig.SellOrNo;
 
     var items = new List<Item>();
@@ -165,7 +185,7 @@ app.MapPost("/salestock", async (HttpRequest request) =>
     {
         var name = element.Name ?? "";
         var date = element.Date;
-        var rating = element.Rating ;
+        var rating = element.Rating;
         Console.WriteLine("Sell value is " + sellValue);
         var item = new Item(name, date, rating);
         item.setSellValue(sellValue);

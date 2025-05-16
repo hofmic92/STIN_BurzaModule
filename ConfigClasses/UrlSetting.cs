@@ -2,6 +2,6 @@
 {
     public class UrlSetting
     {
-        public string EnableUrl { get; set; }
+        public string EnableUrl { get; set; } = string.Empty; //pokus o vyřešení varování v githubu
     }
 }

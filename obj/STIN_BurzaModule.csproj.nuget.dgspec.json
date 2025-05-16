@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hofmi\\Downloads\\STIN_BurzaModule-dev-main2\\STIN_BurzaModule-dev-main2\\STIN_BurzaModule.csproj": {}
+    "C:\\Users\\filip\\source\\repos\\STIN_BurzaModule\\STIN_BurzaModule.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hofmi\\Downloads\\STIN_BurzaModule-dev-main2\\STIN_BurzaModule-dev-main2\\STIN_BurzaModule.csproj": {
+    "C:\\Users\\filip\\source\\repos\\STIN_BurzaModule\\STIN_BurzaModule.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hofmi\\Downloads\\STIN_BurzaModule-dev-main2\\STIN_BurzaModule-dev-main2\\STIN_BurzaModule.csproj",
+        "projectUniqueName": "C:\\Users\\filip\\source\\repos\\STIN_BurzaModule\\STIN_BurzaModule.csproj",
         "projectName": "STIN_BurzaModule",
-        "projectPath": "C:\\Users\\hofmi\\Downloads\\STIN_BurzaModule-dev-main2\\STIN_BurzaModule-dev-main2\\STIN_BurzaModule.csproj",
-        "packagesPath": "C:\\Users\\hofmi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hofmi\\Downloads\\STIN_BurzaModule-dev-main2\\STIN_BurzaModule-dev-main2\\obj\\",
+        "projectPath": "C:\\Users\\filip\\source\\repos\\STIN_BurzaModule\\STIN_BurzaModule.csproj",
+        "packagesPath": "C:\\Users\\filip\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\filip\\source\\repos\\STIN_BurzaModule\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\hofmi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\filip\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,7 +44,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -90,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
