@@ -9,6 +9,7 @@ namespace STIN_BurzaModule
     {
         public override List<Item> filter(List<Item> items)
         {
+            // Seskup podle názvu firmy, vyber z každé skupiny záznam s nejnovějším datem
             return items
                 .GroupBy(i => i.getName())
                 .Select(g => g.OrderByDescending(i => i.getDate()).First())

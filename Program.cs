@@ -1,9 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using STIN_BurzaModule;
-using STIN_BurzaModule.Services;
+using STIN_BurzaModule.DataModel;
+using StockModule.Pages;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using STIN_BurzaModule.DataModel;
+using STIN_BurzaModule.Pages;
+using STIN_BurzaModule.Services;
+using Microsoft.AspNetCore.Mvc.Filters;
+using STIN_BurzaModule.Filters;
+using STIN_BurzaModule.ConfigClasses;
+using Microsoft.Extensions.Http;
+using System.Diagnostics.CodeAnalysis;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,12 +21,22 @@ builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
 builder.Services.AddHostedService<StockDataBackgroundService>();
 builder.Services.AddTransient<IndexModel>();
-builder.Services.AddScoped<StockService>();
-builder.Services.AddScoped<CommunicationManager>();
 builder.Services.AddScoped<DeclineThreeDaysFilter>();
 builder.Services.AddScoped<MoreThanTwoDeclinesFilter>();
 builder.Services.AddScoped<FinalFilter>();
 builder.Services.Configure<UserFilterSettings>(builder.Configuration.GetSection("UserFilters"));
+builder.Services.Configure<UrlSetting>(builder.Configuration.GetSection("Url"));
+builder.Services.Configure<SellValueSetting>(builder.Configuration.GetSection("SellValueSetting"));
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 // Build aplikace
 var app = builder.Build();
@@ -31,102 +50,261 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 app.UseAuthorization();
 
-// Endpointy
-app.MapGet("/neco", () =>
-{
-    List<Item> items = new List<Item>
-    {
-        new Item("Microsoft", 1713960000, 0) { Rating = null, Sell = null }
-    };
-    return items;
-})
-.WithName("GetItems")
-.WithOpenApi();
+var configuration = builder.Configuration;
 
-app.MapGet("/stock-data", async (HttpContext context) =>
-{
-    var httpClientFactory = context.RequestServices.GetRequiredService<IHttpClientFactory>();
-    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-    const string apiKey = "LZGQZFV49DMW7M3J";
-    var symbols = new List<string> { "AAPL", "MSFT", "GOOGL" };
+/*var urlConfig = configuration.GetSection("Url").Get<UrlSetting>();
+var url = urlConfig.EnableUrl;*/
 
-    var items = new List<Item>();
-    var client = httpClientFactory.CreateClient();
+// Získání hodnoty z konfigurace
+//string url = builder.Configuration["RatingService:Url"];
 
-    foreach (var symbol in symbols)
-    {
-        try
-        {
-            string apiUrl = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={apiKey}";
-            var response = await client.GetStringAsync(apiUrl);
-            var json = System.Text.Json.JsonDocument.Parse(response).RootElement;
-            var priceStr = json.GetProperty("Global Quote").GetProperty("05. price").GetString();
-            if (decimal.TryParse(priceStr, out _))
-            {
-                items.Add(new Item(symbol, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds(), 0));
-                logger.LogInformation($"Successfully fetched {symbol}");
-            }
-            else
-            {
-                logger.LogWarning($"Failed to parse data for {symbol}");
-            }
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, $"Error fetching data for {symbol}");
-        }
-    }
-
-    return Results.Json(items, new JsonSerializerOptions
-    {
-        WriteIndented = true,
-        Converters = { new ItemJsonConverter() }
-    });
-})
-.WithName("GetStockData")
-.WithOpenApi();
-
-app.MapPost("/send-stock-data", async (HttpContext context, IServiceProvider services) =>
+app.MapPost("/liststock", async (IServiceProvider services) =>
 {
     using var scope = services.CreateScope();
     var model = scope.ServiceProvider.GetRequiredService<IndexModel>();
-    var url = "https://stinnews-cpaeakbfgkdpe0ae.westeurope-01.azurewebsites.net/UserDashboard";
-
     await model.FetchDataInternal();
-    var items = model.GetStockItemsAsJson();
-    var json = JsonSerializer.Serialize(items, new JsonSerializerOptions
+
+    List<DataModel> dataModels = new List<DataModel>();
+    List<Item> items = model.DownloadedItems;
+    if (items == null)
+        {
+        }
+        else
+        {
+            
+            var filterSettings = configuration.GetSection("UserFilters").Get<UserFilterSettings>();
+
+            var filters = new List<Filter>();
+
+            if (filterSettings.EnableDeclineThreeDays)
+                filters.Add(new DeclineThreeDaysFilter());
+
+            if (filterSettings.EnableMoreThanTwoDeclines)
+                filters.Add(new MoreThanTwoDeclinesFilter());
+            
+            filters.Add(new FinalFilter()); // vždy nech nejnovější záznam
+            foreach (Filter filter in filters)
+            {
+            items = filter.filter(items);
+            }
+        }
+    foreach (Item item in items)
     {
-        WriteIndented = true,
-        Converters = { new ItemJsonConverter() }
+        DataModel datamodel = new DataModel();
+        datamodel.Sell = item.getSell();
+        datamodel.Name = item.getName();
+        datamodel.Date = item.getDate();
+        datamodel.Rating = item.getRating();
+        dataModels.Add(datamodel);
+        Console.WriteLine($"Processing: {datamodel.Name}, Date: {datamodel.Date}, Rating: {datamodel.Rating}, Sell: {datamodel.Sell}");
+    }
+    
+    Console.WriteLine(dataModels);
+    Console.WriteLine("????????????????");
+
+    return Results.Ok(dataModels);
+})
+.WithName("PostListStockStatic")
+.WithOpenApi();
+
+
+/*app.MapPost("/salestock", async (HttpRequest request) =>
+{
+    using var reader = new StreamReader(request.Body);
+    var body = await reader.ReadToEndAsync();
+
+    var data = JsonSerializer.Deserialize<List<DataModel>>(body, new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true
     });
 
-    var httpClientFactory = scope.ServiceProvider.GetRequiredService<IHttpClientFactory>();
-    var client = httpClientFactory.CreateClient();
-    var content = new StringContent(json, Encoding.UTF8, "application/json");
+    if (data == null)
+    {
+        return Results.BadRequest("Špatná data");
+    }
+
+    var sellValueConfig = configuration.GetSection("SellValueSetting").Get<SellValueSetting>();
+    int sellValue = sellValueConfig.SellOrNo;
+
+    var resultData = new List<DataModel>();
+
+    foreach (var element in data)
+    {
+        var name = element.Name ?? "";
+        var date = element.Date;
+        var rating = element.Rating;
+
+        var item = new Item(name, date);
+        item.setRating(rating); // Nastaví rating pomocí veřejné metody
+        item.setSellValue(sellValue); // Nastaví prahovou hodnotu pro prodej
+        item.setSell(); // Přepočítá Sell na základě Rating a sellvalue
+
+        resultData.Add(new DataModel
+        {
+            Name = item.getName(),
+            Date = item.getDate(),
+            Rating = item.getRating(),
+            Sell = item.getSell()
+        });
+
+        Console.WriteLine($"Jméno: {item.getName()}, Rating: {item.getRating()}, SellValue: {sellValue}, Sell: {item.getSell()}");
+    }
+
+    return Results.Ok(resultData);
+});*/
+
+
+app.MapPost("/salestock", async (HttpRequest request, IHttpClientFactory httpClientFactory) =>
+{
+    using var reader = new StreamReader(request.Body);
+    var body = await reader.ReadToEndAsync();
+
+    // 1. Deserializace vstupních dat
+    var inputItems = JsonSerializer.Deserialize<List<DataModel>>(body, new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true
+    });
+
+    if (inputItems == null)
+    {
+        return Results.BadRequest("Neplatný vstupní formát dat");
+    }
+
+    var sellValueConfig = configuration.GetSection("SellValueSetting").Get<SellValueSetting>();
+    int sellValue = sellValueConfig.SellOrNo;
+    var ratingServiceUrl = configuration["Url:RatingService"];
+
+    // 2. Příprava dat pro externí API (pouze jména a data)
+    var ratingRequestData = inputItems.Select(i => new {
+        name = i.Name,
+        date = i.Date
+    }).ToList();
+
+    var httpClient = httpClientFactory.CreateClient();
+    List<DataModel> ratedItems = new();
 
     try
     {
-        var response = await client.PostAsync(url, content);
-        response.EnsureSuccessStatusCode();
-        return Results.Ok("Data successfully sent");
+        // 3. Odeslání na externí API pro rating
+        var ratingResponse = await httpClient.PostAsJsonAsync(ratingServiceUrl, ratingRequestData);
+
+        if (!ratingResponse.IsSuccessStatusCode)
+        {
+            throw new Exception($"Chyba při získávání ratingů: {ratingResponse.StatusCode}");
+        }
+
+        // 4. Zpracování odpovědi s ratingy
+        ratedItems = await ratingResponse.Content.ReadFromJsonAsync<List<DataModel>>();
     }
     catch (Exception ex)
     {
-        return Results.Problem($"Failed to send data: {ex.Message}");
+        Console.WriteLine($"Chyba při komunikaci s rating API: {ex.Message}");
+        return Results.Problem("Nelze získat ratingy z externí služby");
     }
-})
-.WithName("SendStockData")
-.WithOpenApi();
+
+    // 5. Výpočet doporučení
+    var resultItems = new List<DataModel>();
+    foreach (var ratedItem in ratedItems)
+    {
+        var item = new Item(ratedItem.Name, ratedItem.Date);
+        item.setRating(ratedItem.Rating);
+        item.setSellValue(sellValue);
+        item.setSell();
+
+        resultItems.Add(new DataModel
+        {
+            Name = item.getName(),
+            Date = item.getDate(),
+            Rating = item.getRating(),
+            Sell = item.getSell()
+        });
+    }
+
+    return Results.Ok(resultItems);
+});
+
+
+
+
+app.MapPost("/rating", async (HttpClient httpClient, HttpRequest request) =>
+{
+    using var reader = new StreamReader(request.Body);
+    var body = await reader.ReadToEndAsync();
+    Console.WriteLine("Tak moc to mam rad");
+
+    var data = JsonSerializer.Deserialize<List<DataModel>>(body, new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true
+    });
+
+    if (data == null)
+        return Results.BadRequest("Špatná data");
+
+    var urlConfig = configuration.GetSection("Url").Get<UrlSetting>();
+    var ratingServiceUrl = urlConfig.EnableUrl;
+
+    var response = await httpClient.PostAsync(
+        ratingServiceUrl,
+        new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json"));
+
+    if (!response.IsSuccessStatusCode)
+        return Results.Problem("Chyba při volání rating služby");
+
+    var responseData = await response.Content.ReadAsStringAsync();
+    var updatedData = JsonSerializer.Deserialize<List<DataModel>>(responseData);
+
+    return Results.Ok(updatedData);
+});
+
+
+
+
+/*app.MapPost("/salestock-static", async () =>
+{
+
+
+    //var items = GetStockItems();
+
+    string jsonString = @"[
+    {
+        ""name"": ""JoeMama"", 
+        ""date"": 12345678, 
+        ""rating"": -10, 
+        ""sell"": 1
+    },
+    {
+        ""name"": ""Google"", 
+        ""date"": 12345678, 
+        ""rating"": 10, 
+        ""sell"": 0
+    },
+    {
+        ""name"": ""OpenAI"", 
+        ""date"": 12345678, 
+        ""rating"": 2, 
+        ""sell"": 0
+    }
+]";
+
+    List<DataModel> data = JsonSerializer.Deserialize<List<DataModel>>(jsonString);
+
+
+    return Results.Ok(data);
+
+
+});*/
+
+
+
 
 app.MapRazorPages();
-app.Run();
 
-// Supporting class
-public class StockDay
-{
-    public DateTime Date { get; set; }
-    public decimal ClosePrice { get; set; }
-    public decimal Change { get; set; }
-}
+app.Run(); // Spuštění aplikace
+
+// Supporting classes

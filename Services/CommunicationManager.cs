@@ -7,9 +7,12 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using STIN_BurzaModule.DataModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace STIN_BurzaModule.Services
 {
+    [ExcludeFromCodeCoverage]
     public class CommunicationManager
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -179,7 +182,7 @@ namespace STIN_BurzaModule.Services
             var serializedItems = JsonSerializer.Serialize(items, new JsonSerializerOptions
             {
                 WriteIndented = true,
-                Converters = { new ItemJsonConverter() }
+               // Converters = { new ItemJsonConverter() }
             });
             var content = new StringContent(serializedItems, System.Text.Encoding.UTF8, "application/json");
 
@@ -208,7 +211,7 @@ namespace STIN_BurzaModule.Services
     }
 
     // Vlastní konvertor pro serializaci Item s getterovou strukturou
-    public class ItemJsonConverter : System.Text.Json.Serialization.JsonConverter<Item>
+    /*public class ItemJsonConverter : System.Text.Json.Serialization.JsonConverter<Item>
     {
         public override Item ReadJson(JsonSerializer reader, Type objectType, Item existingValue, bool hasValue, JsonSerializerOptions options)
         {
@@ -224,5 +227,5 @@ namespace STIN_BurzaModule.Services
             if (value.getSell().HasValue) writer.WriteNumber("sell", value.getSell().Value);
             writer.WriteEndObject();
         }
-    }
+    }*/
 }
