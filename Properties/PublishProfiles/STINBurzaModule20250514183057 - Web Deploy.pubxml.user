@@ -6,8 +6,7 @@ Tento soubor je používán procesem publikování nebo balení webového projek
 <Project>
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAApEa6c2WXYUOWWJD9041wTQAAAAACAAAAAAAQZgAAAAEAACAAAAC9OBJEi3+1BegoUtFFwgUP5e8OMMRpny7DQuUse3OaewAAAAAOgAAAAAIAACAAAABzGoGQXDf/nJNfWHWDOXn1Wph1HgXuEMsLs9CvuFItHoAAAABXRonwirX77/IgnN/Nk75tTivAkDABUGx4t9XIB4L6zvFRk2DVYYqkMI+qECdv4YG6aw9805j14jBiDrraerBCLLlvuIYAVUpukcLbn0eZmRhwAXewEMg8VJaQjOuOuX4+T1G5i/EpVQRirbq31vmCl5tfygcs8f72U5iffSDKiEAAAADz4n3gX4AL9cXPdlUEil2AjgpGRzK1+xGFFdfvbJBaL2hi6v7NvyZJAMreugv1lYHqZE2JQz8o5rrbAPcqNWT2</EncryptedPassword>
-    <History>True|2025-05-14T16:35:52.1326415Z||;</History>
+    <History>False|2025-05-16T14:40:49.8604695Z||;True|2025-05-14T18:35:52.1326415+02:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

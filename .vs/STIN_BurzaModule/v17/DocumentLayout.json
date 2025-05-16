@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\hofmi\\onedrive\\plocha\\stin_burzamodule\\stin_burzamodule\\stin_burzamodule\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\hofmi\\onedrive\\plocha\\stin_burzamodule\\stin_burzamodule\\stin_burzamodule\\logs\\application.log||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:logs\\application.log||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\hofmi\\onedrive\\plocha\\stin_burzamodule\\stin_burzamodule\\stin_burzamodule\\services\\communicationmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:services\\communicationmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\hofmi\\onedrive\\plocha\\stin_burzamodule\\stin_burzamodule\\stin_burzamodule\\pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\hofmi\\onedrive\\plocha\\stin_burzamodule\\stin_burzamodule\\stin_burzamodule\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\hofmi\\onedrive\\plocha\\stin_burzamodule\\stin_burzamodule\\stin_burzamodule\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\hofmi\\onedrive\\plocha\\stin_burzamodule\\stin_burzamodule\\stin_burzamodule\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -40,10 +48,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|c:\\users\\hofmi\\onedrive\\plocha\\stin_burzamodule\\stin_burzamodule\\stin_burzamodule\\services\\communicationmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{07DC2CA0-0ADC-4F3E-8309-B22FBDBA2416}|STIN_BurzaModule.csproj|solutionrelative:services\\communicationmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\IndexModelTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -133,47 +137,25 @@
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Pages\\Index.cshtml",
-              "RelativeDocumentMoniker": "Pages\\Index.cshtml",
-              "ToolTip": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Pages\\Index.cshtml",
-              "RelativeToolTip": "Pages\\Index.cshtml",
-              "ViewState": "AgIAAHoAAAAAAAAAAAAQwO0AAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-14T17:23:36.763Z",
+              "Title": "application.log",
+              "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Logs\\application.log",
+              "RelativeDocumentMoniker": "Logs\\application.log",
+              "ToolTip": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Logs\\application.log",
+              "RelativeToolTip": "Logs\\application.log",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-05-16T15:20:38.221Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T17:32:15.749Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-14T18:06:27.833Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "StockDataBackgroundService.cs",
               "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Services\\StockDataBackgroundService.cs",
               "RelativeDocumentMoniker": "Services\\StockDataBackgroundService.cs",
@@ -185,7 +167,68 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Pages\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "Pages\\Index.cshtml.cs",
+              "ToolTip": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Pages\\Index.cshtml.cs",
+              "RelativeToolTip": "Pages\\Index.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T17:23:40.654Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CommunicationManager.cs",
+              "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Services\\CommunicationManager.cs",
+              "RelativeDocumentMoniker": "Services\\CommunicationManager.cs",
+              "ToolTip": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Services\\CommunicationManager.cs",
+              "RelativeToolTip": "Services\\CommunicationManager.cs",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAAwMsAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T11:19:44.963Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-14T17:32:15.749Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-14T18:06:27.833Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Pages\\Index.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Index.cshtml",
+              "ToolTip": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Pages\\Index.cshtml",
+              "RelativeToolTip": "Pages\\Index.cshtml",
+              "ViewState": "AgIAAHoAAAAAAAAAAAAQwO0AAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-14T17:23:36.763Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "UrlSetting.cs",
               "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\ConfigClasses\\UrlSetting.cs",
               "RelativeDocumentMoniker": "ConfigClasses\\UrlSetting.cs",
@@ -193,25 +236,11 @@
               "RelativeToolTip": "ConfigClasses\\UrlSetting.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T23:10:50.087Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T23:10:50.087Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Index.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Pages\\Index.cshtml.cs",
-              "RelativeDocumentMoniker": "Pages\\Index.cshtml.cs",
-              "ToolTip": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Pages\\Index.cshtml.cs",
-              "RelativeToolTip": "Pages\\Index.cshtml.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAYwBEAAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T17:23:40.654Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "SellValueSetting.cs",
               "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\ConfigClasses\\SellValueSetting.cs",
               "RelativeDocumentMoniker": "ConfigClasses\\SellValueSetting.cs",
@@ -219,12 +248,11 @@
               "RelativeToolTip": "ConfigClasses\\SellValueSetting.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T23:11:09.463Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T23:11:09.463Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "DeclineThreeDaysFilter.cs",
               "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Filters\\DeclineThreeDaysFilter.cs",
               "RelativeDocumentMoniker": "Filters\\DeclineThreeDaysFilter.cs",
@@ -236,7 +264,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Item.cs",
               "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Item.cs",
               "RelativeDocumentMoniker": "Item.cs",
@@ -244,12 +272,11 @@
               "RelativeToolTip": "Item.cs",
               "ViewState": "AgIAACwAAAAAAAAAAAAUwGEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T17:25:08.19Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T17:25:08.19Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "STIN_BurzaModule.Tests.csproj",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj",
@@ -260,19 +287,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "CommunicationManager.cs",
-              "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Services\\CommunicationManager.cs",
-              "RelativeDocumentMoniker": "Services\\CommunicationManager.cs",
-              "ToolTip": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Services\\CommunicationManager.cs",
-              "RelativeToolTip": "Services\\CommunicationManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T11:19:44.963Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "IndexModelTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\IndexModelTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\IndexModelTests.cs",
@@ -283,7 +298,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "StockService.cs",
               "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Services\\StockService.cs",
               "RelativeDocumentMoniker": "Services\\StockService.cs",
@@ -295,7 +310,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "ListstockEndpointTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\ListstockEndpointTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\ListstockEndpointTests.cs",
@@ -307,7 +322,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "STIN_BurzaModule.http",
               "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule.http",
               "RelativeDocumentMoniker": "STIN_BurzaModule.http",
@@ -319,7 +334,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "SalestockEndpointTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\SalestockEndpointTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\SalestockEndpointTests.cs",
@@ -331,7 +346,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "DemoTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\DemoTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\DemoTests.cs",
@@ -343,7 +358,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "StockDataBackgroundServiceTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\StockDataBackgroundServiceTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\StockDataBackgroundServiceTests.cs",
@@ -355,7 +370,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "DeclineThreeDaysFilterTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\DeclineThreeDaysFilterTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\DeclineThreeDaysFilterTests.cs",
@@ -367,7 +382,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "CommunicationManagerTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\CommunicationManagerTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\CommunicationManagerTests.cs",
@@ -379,7 +394,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "UrlSettingTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\UrlSettingTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\UrlSettingTests.cs",
@@ -391,7 +406,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "StockServiceTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\StockServiceTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\StockServiceTests.cs",
@@ -403,7 +418,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "SellValueSettingTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\SellValueSettingTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\SellValueSettingTests.cs",
@@ -415,7 +430,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "DataModelTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\DataModelTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\DataModelTests.cs",
@@ -427,7 +442,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "UserFilterSettingsTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\UserFilterSettingsTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\UserFilterSettingsTests.cs",
@@ -439,7 +454,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "FinalFilterTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\FinalFilterTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\FinalFilterTests.cs",
@@ -451,7 +466,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "MoreThanTwoDeclinesFilterTests.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\MoreThanTwoDeclinesFilterTests.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\MoreThanTwoDeclinesFilterTests.cs",
@@ -463,7 +478,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "ItemTest.cs",
               "DocumentMoniker": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\ItemTest.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\ItemTest.cs",
@@ -475,7 +490,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "DataModel.cs",
               "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\DataModel\\DataModel.cs",
               "RelativeDocumentMoniker": "DataModel\\DataModel.cs",
@@ -487,7 +502,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "UserFilterSettings.cs",
               "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Filters\\UserFilterSettings.cs",
               "RelativeDocumentMoniker": "Filters\\UserFilterSettings.cs",
@@ -499,7 +514,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "MoreThanTwoDeclinesFilter.cs",
               "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Filters\\MoreThanTwoDeclinesFilter.cs",
               "RelativeDocumentMoniker": "Filters\\MoreThanTwoDeclinesFilter.cs",
@@ -511,7 +526,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "FinalFilter.cs",
               "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Filters\\FinalFilter.cs",
               "RelativeDocumentMoniker": "Filters\\FinalFilter.cs",
@@ -523,7 +538,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "apis1.arm.json",
               "DocumentMoniker": "C:\\Users\\hofmi\\OneDrive\\Plocha\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule\\Properties\\ServiceDependencies\\STINBurzaModule20250514183057 - Web Deploy\\apis1.arm.json",
               "RelativeDocumentMoniker": "Properties\\ServiceDependencies\\STINBurzaModule20250514183057 - Web Deploy\\apis1.arm.json",

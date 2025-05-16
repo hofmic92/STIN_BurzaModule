@@ -6,8 +6,7 @@ Tento soubor je používán procesem publikování nebo balení webového projek
 <Project>
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAApEa6c2WXYUOWWJD9041wTQAAAAACAAAAAAAQZgAAAAEAACAAAACdiIsX3tt8jd5BgDoRZuv/hUurQwP3uYnSpNBUck2elQAAAAAOgAAAAAIAACAAAADSwloMSqyTJX8CTFrLaO+T+SgiQSbM+dSAGyTdY2gm/YAAAABvjQCdDK19r4f/Bpm5omPxty/c66ljndK01WSAiRBondsj1CWyuMV6pyKu+nWiICLdE3dXXcwIo/rEuIpqZMMEikJzh8eO2e/Wb0ktnS+madjJNG+uUKhzkp+DxxxJFoycGSgULgGA4VW4KrL3rg4itat8e8vaPLITYHHcBleWnUAAAADbcTyQm6Q3R/DOn4mseYK288tEfIAATOkem9FtcXdyk6h+6yyL1k94tdxouE3x4a93WmYf+djmK02fbbzQotY9</EncryptedPassword>
-    <History>True|2025-05-15T12:14:32.2254847Z||;</History>
+    <History>False|2025-05-16T15:17:24.5214276Z||;False|2025-05-16T17:10:53.2255003+02:00||;False|2025-05-16T17:04:39.8736133+02:00||;False|2025-05-16T16:48:04.0622854+02:00||;False|2025-05-16T16:46:54.8626769+02:00||;False|2025-05-16T16:45:12.5326304+02:00||;False|2025-05-16T16:42:08.6575529+02:00||;False|2025-05-16T16:39:36.9078771+02:00||;False|2025-05-16T16:38:52.4837893+02:00||;True|2025-05-15T14:14:32.2254847+02:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>
