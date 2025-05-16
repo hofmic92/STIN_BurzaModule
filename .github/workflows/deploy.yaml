@@ -19,16 +19,16 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore ././BurzaModule.sln
+        run: dotnet restore ./../BurzaModule.sln
 
       - name: Build project
-        run: dotnet build ././BurzaModule.sln --configuration Release --no-restore
+        run: dotnet build ./../BurzaModule.sln --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test ././BurzaModule.Tests/BurzaModule.Tests.csproj --no-build --verbosity normal  //zapotřebí napsat cestu k souboru
+        run: dotnet test ./../BurzaModule.Tests/BurzaModule.Tests.csproj --no-build --verbosity normal  //zapotřebí napsat cestu k souboru
 
       - name: Publish project
-        run: dotnet publish ././STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
+        run: dotnet publish ./../STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
