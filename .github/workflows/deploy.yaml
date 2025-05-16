@@ -13,24 +13,33 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore ./BurzaModule.sln
+        run: dotnet restore STIN_BurzaModule/STIN_BurzaModule.sln
 
       - name: Build solution
-        run: dotnet build ./BurzaModule.sln --configuration Release --no-restore
+        run: dotnet build STIN_BurzaModule/STIN_BurzaModule.sln --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test ./BurzaModule.Tests/BurzaModule.Tests.csproj --no-build --verbosity normal
+        run: dotnet test STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj --no-build --no-restore --verbosity normal
 
       - name: Publish web project
-        run: dotnet publish ./STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
+        run: dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
 
       - name: Deploy to Azure Web App
+        if: github.ref == 'refs/heads/main'
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'STINBurzaModule20250514183057'
