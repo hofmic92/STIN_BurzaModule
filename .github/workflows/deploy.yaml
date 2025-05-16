@@ -3,7 +3,7 @@ name: Build, Test and Deploy to Azure
 on:
   push:
     branches:
-      - added-pipeline
+      - tests-for-program
 
 jobs:
   build-and-deploy:
@@ -23,6 +23,20 @@ jobs:
 
       - name: Build project
         run: dotnet build ./STIN_BurzaModule.sln --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test ./STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj --no-build --verbosity normal  //zapotřebí napsat cestu k souboru
+
+      - name: Publish project
+        run: dotnet publish ./STIN_BurzaModule.csproj --configuration Release --output ./publish
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'STINBurzaModule20250514183057'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ./publish
+
 
 
 
