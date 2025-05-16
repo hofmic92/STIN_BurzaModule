@@ -13,6 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
@@ -25,12 +33,13 @@ jobs:
         run: dotnet build ./BurzaModule.sln --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test ./BurzaModule.Tests/BurzaModule.Tests.csproj --no-build --verbosity normal
+        run: dotnet test ./BurzaModule.Tests/BurzaModule.Tests.csproj --no-build --no-restore --verbosity normal
 
       - name: Publish web project
         run: dotnet publish ./STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
 
       - name: Deploy to Azure Web App
+        if: github.ref == 'refs/heads/main'
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'STINBurzaModule20250514183057'
