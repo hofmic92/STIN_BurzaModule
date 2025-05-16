@@ -8,9 +8,11 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using STIN_BurzaModule.DataModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace STIN_BurzaModule.Services
 {
+    [ExcludeFromCodeCoverage]
     public class CommunicationManager
     {
         private readonly IHttpClientFactory _httpClientFactory;

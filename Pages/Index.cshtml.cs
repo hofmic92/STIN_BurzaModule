@@ -22,7 +22,7 @@ namespace StockModule.Pages
         private const string ApiKey = "LZGQZFV49DMW7M3J";
         private static readonly string FavoritesFilePath = Path.Combine("Data", "favorites.json");
         private static readonly string LogFilePath = Path.Combine("Logs", "application.log");
-        private static bool UseStaticData = true;
+        private static bool UseStaticData = false;
         public List<Item> DownloadedItems { get; private set; } = new();
 
         public DateTime LastUpdateTime { get; private set; }
@@ -31,6 +31,7 @@ namespace StockModule.Pages
         {
             _httpClientFactory = httpClientFactory;
             InitializeLogging();
+            LoadFavoritesFromFile();
         }
 
         private void InitializeLogging()
@@ -48,23 +49,6 @@ namespace StockModule.Pages
                 Console.WriteLine($"Failed to initialize logging: {ex.Message}");
             }
         }
-        /*public List<DataModel> GetStockItems()
-        {
-            var items = new List<DataModel>();
-
-            foreach (var stock in _stockPrices)
-            {
-                items.Add(new DataModel
-                {
-                    Name = stock.Key,
-                    Date = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds(),
-                    Rating = 0,
-                    Sell = 0
-                });
-            }
-
-            return items;
-        }*/
 
         public List<Item> GetStockItems()
         {
@@ -95,16 +79,58 @@ namespace StockModule.Pages
 
         public void OnGet()
         {
-            LoadFavoritesFromFile();
             Log("Načtení stránky Index");
+        }
+
+        public async Task<IActionResult> OnPostUpdateRatings()
+        {
+            try
+            {
+                using var reader = new StreamReader(Request.Body);
+                var body = await reader.ReadToEndAsync();
+                var updatedItems = System.Text.Json.JsonSerializer.Deserialize<List<DataModel>>(body);
+
+                if (updatedItems != null)
+                {
+                    foreach (var updatedItem in updatedItems)
+                    {
+                        var existingItem = DownloadedItems.FirstOrDefault(i => i.getName() == updatedItem.Name && i.getDate() == updatedItem.Date);
+                        if (existingItem != null)
+                        {
+                            existingItem.setRating(updatedItem.Rating);
+                            existingItem.setSell();
+                        }
+                    }
+                    Log("Ratingy byly aktualizovány z externího servisu");
+                }
+
+                return new OkResult();
+            }
+            catch (Exception ex)
+            {
+                Log($"Chyba při aktualizaci ratingů: {ex.Message}");
+                return new BadRequestResult();
+            }
         }
 
         public async Task<IActionResult> OnPostFetchData()
         {
             await FetchDataInternal();
-            return RedirectToPage();
+            return Page();
         }
 
+
+        public async Task<IActionResult> OnGetGetStockData()
+        {
+            await FetchDataInternal(); // Načte aktuální data
+            var items = DownloadedItems.Select(i => new {
+                name = i.getName(),
+                date = i.getDate(),
+                price = i.getPrice()
+            }).ToList();
+
+            return new JsonResult(items);
+        }
 
         internal async Task FetchDataInternal()
         {
@@ -118,33 +144,6 @@ namespace StockModule.Pages
 
             _stockPrices.Clear(); // nebudeš používat, pokud přecházíš na Itemy
             List<Item> historyItems;
-            /*foreach (var symbol in _favoriteItems)
-            {
-                try
-                {
-                    historyItems = await FetchStockHistory(symbol, 5);
-                    foreach (var item in historyItems)
-                    {
-                        Console.WriteLine($"DEBUG: Symbol={item.getName()}, Datum={item.getDate()}, Cena={item.getPrice()}");
-                    }
-                    Console.WriteLine("ooooo");
-
-                    foreach (var item in historyItems)
-                    {
-                        Log($"✓ {symbol} | {item.getDate()} | {item.getPrice()}");
-                        // Můžeš si zde ukládat nebo zpracovávat položky dle potřeby
-                    }
-                    DownloadedItems = historyItems;
-                    foreach (var item in DownloadedItems)
-                    {
-                        Console.WriteLine($"DEBUG: Symbol={item.getName()}, Datum={item.getDate()}, Cena={item.getPrice()}");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log($"Chyba u {symbol}: {ex.Message}");
-                }
-            }*/
             DownloadedItems = new List<Item>(); // inicializace před cyklem
 
             foreach (var symbol in _favoriteItems)
@@ -180,26 +179,12 @@ namespace StockModule.Pages
 
         private async Task<List<Item>> FetchStockHistory(string symbol, int daysBack)
         {
-            /*if (UseStaticData)
-            {
-                var now = DateTime.Now;
-                var staticItems = new List<Item>();
-                for (int i = 0; i < daysBack; i++)
-                {
-                    var date = now.AddDays(-i);
-                    long unixTimestamp = new DateTimeOffset(date).ToUnixTimeSeconds();
-                    int price = 100 + i * 2; // nějaký vzorek růstu ceny
-
-                    staticItems.Add(new Item(symbol, unixTimestamp, price));
-                }
-                return await Task.FromResult(staticItems);
-            }*/
             if (UseStaticData)
             {
                 var now = DateTime.Now;
                 var staticItems = new List<Item>();
 
-                bool isDescending = symbol == "MSFT"; // Nastav si, který symbol má klesat
+                bool isDescending = symbol == "MSFT";
 
                 for (int i = 0; i < daysBack; i++)
                 {
@@ -257,49 +242,6 @@ namespace StockModule.Pages
 
             return items;
         }
-
-
-        /*private async Task<List<Item>> FetchStockHistory(string symbol, int daysBack)
-        {
-            var client = _httpClientFactory.CreateClient();
-            string apiUrl = $"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={ApiKey}";
-
-            var response = await client.GetStringAsync(apiUrl);
-            var json = JObject.Parse(response);
-
-            var timeSeries = json["Time Series (Daily)"];
-            if (timeSeries == null)
-            {
-                throw new Exception($"Chybí data TIME_SERIES_DAILY pro {symbol}");
-            }
-
-            var items = new List<Item>();
-
-            // vezmeme posledních N dní zpětně
-            foreach (var entry in timeSeries.Children<JProperty>().Take(daysBack))
-            {
-                string dateStr = entry.Name;
-                var data = entry.Value;
-
-                if (decimal.TryParse(data["4. close"]?.ToString(), out decimal closePrice))
-                {
-                    DateTime date = DateTime.Parse(dateStr);
-                    long unixTimestamp = new DateTimeOffset(date).ToUnixTimeSeconds();
-                    int price = (int)Math.Round(closePrice);
-
-                    var item = new Item(symbol, unixTimestamp, price);
-                    items.Add(item);
-                }
-            }
-
-            return items;
-        }*/
-
-
-
-
-
-
         private async Task<decimal> FetchStockPrice(string symbol)
         {
             var client = _httpClientFactory.CreateClient();
@@ -356,14 +298,19 @@ namespace StockModule.Pages
         {
             try
             {
-                if (System.IO.File.Exists(FavoritesFilePath))
+                var dataDir = Path.Combine(Directory.GetCurrentDirectory(), "Data");
+                var filePath = Path.Combine(dataDir, "favorites.json");
+
+                if (!Directory.Exists(dataDir))
                 {
-                    var json = System.IO.File.ReadAllText(FavoritesFilePath);
+                    Directory.CreateDirectory(dataDir);
+                }
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    var json = System.IO.File.ReadAllText(filePath);
                     var list = System.Text.Json.JsonSerializer.Deserialize<List<string>>(json);
-                    if (list != null)
-                    {
-                        _favoriteItems = list;
-                    }
+                    _favoriteItems = list ?? new List<string>();
                 }
             }
             catch (Exception ex)
@@ -376,9 +323,17 @@ namespace StockModule.Pages
         {
             try
             {
-                var json = System.Text.Json.JsonSerializer.Serialize(_favoriteItems, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-                Directory.CreateDirectory(Path.GetDirectoryName(FavoritesFilePath)!);
-                System.IO.File.WriteAllText(FavoritesFilePath, json);
+                var dataDir = Path.Combine(Directory.GetCurrentDirectory(), "Data");
+                var filePath = Path.Combine(dataDir, "favorites.json");
+
+                if (!Directory.Exists(dataDir))
+                {
+                    Directory.CreateDirectory(dataDir);
+                }
+
+                var json = System.Text.Json.JsonSerializer.Serialize(_favoriteItems,
+                    new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+                System.IO.File.WriteAllText(filePath, json);
             }
             catch (Exception ex)
             {
@@ -389,20 +344,9 @@ namespace StockModule.Pages
 
         private void Log(string message)
         {
-            /*var timestamp = DateTime.Now.ToString("HH:mm:ss");
-            var logEntry = $"{timestamp} | {message}";
-            _logBuilder.AppendLine(logEntry);
-
-            // Omezení logu na posledních 100 zpráv
-            var lines = _logBuilder.ToString().Split(Environment.NewLine);
-            if (lines.Length > 100)
-            {
-                _logBuilder = new StringBuilder(string.Join(Environment.NewLine, lines.Skip(lines.Length - 100)));
-            }*/
             var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             var logEntry = $"{timestamp} | {message}";
 
-            // Add to in-memory log
             _logBuilder.AppendLine(logEntry);
 
             // Limit in-memory log to last 100 messages

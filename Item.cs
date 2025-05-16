@@ -96,7 +96,4 @@ namespace STIN_BurzaModule
             this.sellvalue = value;
         }
     }
-
-
-
 }
