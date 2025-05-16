@@ -28,7 +28,7 @@ jobs:
         run: dotnet test ./STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj --no-build --verbosity normal  
 
       - name: Publish project
-        run: dotnet publish ./STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
+        run: dotnet publish ./STIN_BurzaModule.csproj --configuration Release --output ./publish
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
