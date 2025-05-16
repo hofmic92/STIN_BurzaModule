@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\STIN_BurzaModule\STIN_BurzaModule.csproj" />
+    <ProjectReference Include="..\STIN_BurzaModule.Tests\STIN_BurzaModule.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

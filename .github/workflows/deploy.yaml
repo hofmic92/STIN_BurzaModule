@@ -25,7 +25,7 @@ jobs:
         run: dotnet build ./STIN_BurzaModule.sln --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test ./STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj --no-build --verbosity normal  //zapotřebí napsat cestu k souboru
+        run: dotnet test ./STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj --no-build --verbosity normal
 
       - name: Publish project
         run: dotnet publish ./STIN_BurzaModule.csproj --configuration Release --output ./publish
