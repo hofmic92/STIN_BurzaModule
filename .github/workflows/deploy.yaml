@@ -27,16 +27,16 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore ./STIN_BurzaModule.sln
+        run: dotnet restore STIN_BurzaModule/STIN_BurzaModule.sln
 
       - name: Build solution
-        run: dotnet build ./STIN_BurzaModule.sln --configuration Release --no-restore
+        run: dotnet build STIN_BurzaModule/STIN_BurzaModule.sln --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test ./STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj --no-build --no-restore --verbosity normal
+        run: dotnet test STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj --no-build --no-restore --verbosity normal
 
       - name: Publish web project
-        run: dotnet publish ./STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
+        run: dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
 
       - name: Deploy to Azure Web App
         if: github.ref == 'refs/heads/main'
