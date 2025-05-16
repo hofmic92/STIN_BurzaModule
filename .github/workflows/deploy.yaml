@@ -3,7 +3,11 @@ name: Build, Test and Deploy to Azure
 on:
   push:
     branches:
+<<<<<<< HEAD
       - main
+=======
+      - added-pipeline
+>>>>>>> bc7375c49748df7e9b107dbfded969395e0103c3
 
 jobs:
   build-and-deploy:
@@ -19,6 +23,7 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
+<<<<<<< HEAD
         run: dotnet restore ./BurzaModule.sln
 
       - name: Build project
@@ -36,3 +41,12 @@ jobs:
           app-name: 'STINBurzaModule20250514183057'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ./publish
+=======
+        run: dotnet restore ./STIN_BurzaModule.sln
+
+      - name: Build project
+        run: dotnet build ./STIN_BurzaModule.sln --configuration Release --no-restore
+
+
+
+>>>>>>> bc7375c49748df7e9b107dbfded969395e0103c3
