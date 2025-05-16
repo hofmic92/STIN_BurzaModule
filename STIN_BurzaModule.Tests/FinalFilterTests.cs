@@ -6,24 +6,37 @@ using Xunit;
 
 public class FinalFilterTests
 {
-    private long Now => DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    private long UnixDaysAgo(int days) =>
+        new DateTimeOffset(DateTime.UtcNow.Date.AddDays(-days)).ToUnixTimeSeconds();
 
     [Fact]
-    public void KeepsOnlyMostRecentPerFirm()
+    public void Filter_ReturnsOnlyLatestItemPerCompany()
     {
         var filter = new FinalFilter();
         var items = new List<Item>
         {
-            new Item("A", Now - 1000, 10),
-            new Item("A", Now - 500, 11),
-            new Item("B", Now - 2000, 8),
-            new Item("B", Now - 100, 9)
+            new Item("A", UnixDaysAgo(3), 100),
+            new Item("A", UnixDaysAgo(2), 120),
+            new Item("A", UnixDaysAgo(1), 150), // nejnovější
+            new Item("B", UnixDaysAgo(5), 90),
+            new Item("B", UnixDaysAgo(2), 95),  // nejnovější
+            new Item("C", UnixDaysAgo(0), 130)  // jediný → musí zůstat
         };
 
         var result = filter.filter(items);
 
-        Assert.Equal(2, result.Count);
-        Assert.Contains(result, i => i.getName() == "A" && i.getDate() == Now - 500);
-        Assert.Contains(result, i => i.getName() == "B" && i.getDate() == Now - 100);
+        Assert.Equal(3, result.Count); // 3 firmy → 3 výsledky
+
+        var a = result.Find(i => i.getName() == "A");
+        var b = result.Find(i => i.getName() == "B");
+        var c = result.Find(i => i.getName() == "C");
+
+        Assert.NotNull(a);
+        Assert.NotNull(b);
+        Assert.NotNull(c);
+
+        Assert.Equal(150, a.getPrice()); // A → nejnovější
+        Assert.Equal(95, b.getPrice());  // B → nejnovější
+        Assert.Equal(130, c.getPrice()); // C → jediný záznam
     }
 }

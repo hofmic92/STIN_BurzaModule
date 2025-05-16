@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj": {}
+    "C:\\Users\\marti\\Documents\\STIN\\zdepracuji\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj": {
+    "C:\\Users\\marti\\Documents\\STIN\\zdepracuji\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\marti\\Documents\\STIN\\zdepracuji\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj",
         "projectName": "STIN_BurzaModule.Tests",
-        "projectPath": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj",
+        "projectPath": "C:\\Users\\marti\\Documents\\STIN\\zdepracuji\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj",
         "packagesPath": "C:\\Users\\marti\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule.Tests\\obj\\",
+        "outputPath": "C:\\Users\\marti\\Documents\\STIN\\zdepracuji\\STIN_BurzaModule.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\STIN_BurzaModule.csproj": {
-                "projectPath": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\STIN_BurzaModule.csproj"
+              "C:\\Users\\marti\\Documents\\STIN\\zdepracuji\\STIN_BurzaModule\\STIN_BurzaModule.csproj": {
+                "projectPath": "C:\\Users\\marti\\Documents\\STIN\\zdepracuji\\STIN_BurzaModule\\STIN_BurzaModule.csproj"
               }
             }
           }
@@ -54,29 +54,21 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.AspNetCore.Mvc.Testing": {
-              "target": "Package",
-              "version": "[8.0.5, )"
-            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[17.8.0, )"
+              "version": "[17.13.0, )"
             },
             "Moq": {
               "target": "Package",
               "version": "[4.20.72, )"
             },
-            "coverlet.collector": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
             "xunit": {
               "target": "Package",
-              "version": "[2.5.3, )"
+              "version": "[2.9.3, )"
             },
             "xunit.runner.visualstudio": {
               "target": "Package",
-              "version": "[2.5.3, )"
+              "version": "[3.1.0, )"
             }
           },
           "imports": [
@@ -99,14 +91,14 @@
         }
       }
     },
-    "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\STIN_BurzaModule.csproj": {
+    "C:\\Users\\marti\\Documents\\STIN\\zdepracuji\\STIN_BurzaModule\\STIN_BurzaModule.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\STIN_BurzaModule.csproj",
+        "projectUniqueName": "C:\\Users\\marti\\Documents\\STIN\\zdepracuji\\STIN_BurzaModule\\STIN_BurzaModule.csproj",
         "projectName": "STIN_BurzaModule",
-        "projectPath": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\STIN_BurzaModule.csproj",
+        "projectPath": "C:\\Users\\marti\\Documents\\STIN\\zdepracuji\\STIN_BurzaModule\\STIN_BurzaModule.csproj",
         "packagesPath": "C:\\Users\\marti\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marti\\Documents\\STIN\\STIN_BurzaModule\\obj\\",
+        "outputPath": "C:\\Users\\marti\\Documents\\STIN\\zdepracuji\\STIN_BurzaModule\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -149,6 +141,10 @@
               "target": "Package",
               "version": "[33.0.1, )"
             },
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[8.2.0, )"
+            },
             "Microsoft.ApplicationInsights.AspNetCore": {
               "target": "Package",
               "version": "[2.23.0, )"
@@ -156,6 +152,10 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.8, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.13.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
@@ -168,6 +168,16 @@
             "System.Text.Json": {
               "target": "Package",
               "version": "[9.0.4, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.9.3, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.0, )"
             }
           },
           "imports": [
