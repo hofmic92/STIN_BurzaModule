@@ -1,12 +1,11 @@
-name: Build, Test and Deploy to Azure
+name: Build, Test and Deploy with Coverage
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +17,7 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: Install dependencies
+      - name: Install tools
         run: |
           dotnet restore STIN_BurzaModule/STIN_BurzaModule.sln
           dotnet add STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj package coverlet.collector
@@ -29,7 +28,6 @@ jobs:
 
       - name: Run tests with coverage
         id: tests
-        continue-on-error: true
         run: |
           mkdir -p TestResults
           dotnet test STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj \
@@ -37,31 +35,52 @@ jobs:
             --no-restore \
             --settings coverlet.runsettings \
             --collect:"XPlat Code Coverage" \
-            --results-directory TestResults
+            --results-directory TestResults \
+            --logger "console;verbosity=normal" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Include="[STIN_BurzaModule*]*" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude="[xunit.*]*;[*.Tests]*"
+
+      - name: Verify coverage data
+        run: |
+          echo "### Coverage file content ###"
+          COVERAGE_FILE=$(find ./TestResults -name "coverage.cobertura.xml" | head -1)
+          head -n 20 "$COVERAGE_FILE"
+          echo "### File size ###"
+          ls -la "$COVERAGE_FILE"
+          if [ ! -s "$COVERAGE_FILE" ]; then
+            echo "::error::Coverage file is empty!"
+            exit 1
+          fi
 
       - name: Generate HTML report
-        if: always()
         run: |
-          COVERAGE_FILE=$(find ./TestResults -name "coverage.cobertura.xml" | head -1)
           reportgenerator \
-            "-reports:$COVERAGE_FILE" \
+            "-reports:$(find ./TestResults -name coverage.cobertura.xml | head -1)" \
             "-targetdir:coveragereport" \
-            "-reporttypes:Html"
+            "-sourcedirs:$GITHUB_WORKSPACE/STIN_BurzaModule" \
+            "-reporttypes:Html;Badges" \
+            "-title:STIN Burza Module Coverage" \
+            "-verbosity:Warning"
+
+      - name: Verify report content
+        run: |
+          echo "### Report files ###"
+          find ./coveragereport -type f
+          echo "### Index.html content ###"
+          grep -A 10 -B 10 "coverage summary" ./coveragereport/index.html || echo "No coverage data found!"
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: coveragereport/
-          retention-days: 3
+          path: |
+            coveragereport/index.html
+            coveragereport/**/*.html
+            coveragereport/**/*.css
+            coveragereport/**/*.js
+            coveragereport/**/*.svg
+          if-no-files-found: error
+          retention-days: 5
 
-      - name: Check test results
-        if: steps.tests.outcome != 'success'
-        run: |
-          echo "::warning::Some tests failed! Check the test output."
-          exit 1
-
-      - name: Publish and deploy
-        if: success()
-        run: |
-          dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
+      - name: Publish
+        run: dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
