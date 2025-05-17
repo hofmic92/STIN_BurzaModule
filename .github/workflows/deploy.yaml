@@ -28,6 +28,8 @@ jobs:
         run: dotnet build STIN_BurzaModule/STIN_BurzaModule.sln --configuration Release --no-restore
 
       - name: Run tests with coverage
+        id: tests
+        continue-on-error: true
         run: |
           mkdir -p TestResults
           dotnet test STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj \
@@ -38,6 +40,7 @@ jobs:
             --results-directory TestResults
 
       - name: Generate HTML report
+        if: always()
         run: |
           COVERAGE_FILE=$(find ./TestResults -name "coverage.cobertura.xml" | head -1)
           reportgenerator \
@@ -52,6 +55,13 @@ jobs:
           path: coveragereport/
           retention-days: 3
 
+      - name: Check test results
+        if: steps.tests.outcome != 'success'
+        run: |
+          echo "::warning::Some tests failed! Check the test output."
+          exit 1
+
       - name: Publish and deploy
+        if: success()
         run: |
           dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
