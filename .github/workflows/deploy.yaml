@@ -42,7 +42,6 @@ jobs:
             --no-restore \
             --verbosity normal \
             --collect:"XPlat Code Coverage" \
-            --settings coverlet.runsettings
 
       - name: Upload coverage to Codecov (volitelné)
         uses: codecov/codecov-action@v3
