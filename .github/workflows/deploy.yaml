@@ -63,17 +63,34 @@ jobs:
 
       - name: Generate HTML report
         run: |
+          # Explicitně najdeme coverage soubor
+          COVERAGE_FILE=$(find ./TestResults -name "coverage.cobertura.xml" | head -1)
+          echo "Using coverage file: $COVERAGE_FILE"
+    
+          # Vytvoříme plný HTML report
           reportgenerator \
-            "-reports:$(find ./TestResults -name coverage.cobertura.xml | head -1)" \
+            "-reports:$COVERAGE_FILE" \
             "-targetdir:coveragereport" \
-            "-reporttypes:Html;Badges"
+            "-reporttypes:Html;Badges" \
+            "-sourcedirs:./STIN_BurzaModule" \
+            "-historydir:./coveragereport/history"
+
+          # Ověříme obsah složky
+          echo "Generated files in coveragereport:"
+          ls -laR ./coveragereport
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: coveragereport/
-          retention-days: 5
+          path: |
+            coveragereport/index.html
+            coveragereport/**/*.html
+            coveragereport/**/*.css
+            coveragereport/**/*.js
+            coveragereport/**/*.svg
+          if-no-files-found: error
+          retention-days: 3
 
       - name: Publish web project
         run: dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
