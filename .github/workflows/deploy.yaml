@@ -42,10 +42,12 @@ jobs:
           dotnet test STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj \
             --no-build \
             --no-restore \
-            --verbosity normal \
+            --logger "console;verbosity=detailed" \
             --collect:"XPlat Code Coverage" \
             --results-directory ./TestResults \
-            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Include=\"[STIN_BurzaModule*]*\" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=\"[*.Tests]*\"
 
       - name: Verify coverage file
         run: |
