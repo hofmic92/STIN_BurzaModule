@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("STIN_BurzaModule.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d95b2941dabb6fc2ec11f34ef719cb909b618fa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2a5c0556142301b54d2f169c2e79cfa3a9fbe10")]
 [assembly: System.Reflection.AssemblyProductAttribute("STIN_BurzaModule.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("STIN_BurzaModule.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

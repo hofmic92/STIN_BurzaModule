@@ -285,3 +285,4 @@ C:\Users\hofmi\Source\Repos\STIN_BurzaModule2\STIN_BurzaModule.Tests\obj\Debug\n
 C:\Users\hofmi\Source\Repos\STIN_BurzaModule2\STIN_BurzaModule.Tests\obj\Debug\net8.0\STIN_BurzaModule.Tests.pdb
 C:\Users\hofmi\Source\Repos\STIN_BurzaModule2\STIN_BurzaModule.Tests\obj\Debug\net8.0\STIN_BurzaModule.Tests.genruntimeconfig.cache
 C:\Users\hofmi\Source\Repos\STIN_BurzaModule2\STIN_BurzaModule.Tests\obj\Debug\net8.0\ref\STIN_BurzaModule.Tests.dll
+C:\Users\hofmi\Source\Repos\STIN_BurzaModule2\STIN_BurzaModule.Tests\bin\Debug\net8.0\CoverletSourceRootsMapping_STIN_BurzaModule.Tests
