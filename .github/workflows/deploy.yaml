@@ -32,7 +32,7 @@ jobs:
       - name: Build solution
         run: dotnet build STIN_BurzaModule/STIN_BurzaModule.sln --configuration Release --no-restore
 
-      - name: Install Coverlet and ReportGenerator
+      - name: Install test coverage tools
         run: |
           dotnet add STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj package coverlet.collector
           dotnet tool install --global dotnet-reportgenerator-globaltool
@@ -44,12 +44,22 @@ jobs:
             --no-restore \
             --verbosity normal \
             --collect:"XPlat Code Coverage" \
-            --results-directory ./TestResults
+            --results-directory ./TestResults \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
+
+      - name: Verify coverage file exists
+        run: |
+          echo "Generated coverage files:"
+          find ./TestResults -name "coverage.cobertura.xml" -exec ls -la {} \;
+          if [ ! -f "$(find ./TestResults -name coverage.cobertura.xml | head -1)" ]; then
+            echo "Error: Coverage file not found!"
+            exit 1
+          fi
 
       - name: Generate HTML coverage report
         run: |
           reportgenerator \
-            -reports:"./TestResults/**/coverage.cobertura.xml" \
+            -reports:"$(find ./TestResults -name coverage.cobertura.xml | head -1)" \
             -targetdir:"coveragereport" \
             -reporttypes:Html
 
@@ -58,6 +68,7 @@ jobs:
         with:
           name: coverage-report
           path: coveragereport/
+          retention-days: 5
 
       - name: Publish web project
         run: dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
