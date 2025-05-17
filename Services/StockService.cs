@@ -70,10 +70,10 @@ public class StockService
 
     private bool TryParseItem(Dictionary<string, object> data, out Item item)
     {
-        item = null;
+        item = null!; //pokus o vyřešení varování v githubu
         try
         {
-            string name = data.ContainsKey("name") ? data["name"].ToString() : "";
+            string name = data.ContainsKey("name") ? (data["name"]?.ToString() ?? "") : ""; //pokus o vyřešení varování v githubu
             if (string.IsNullOrEmpty(name)) return false;
 
             long date = data.ContainsKey("date") && long.TryParse(data["date"].ToString(), out var d) ? d : 0;

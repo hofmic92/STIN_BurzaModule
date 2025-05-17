@@ -95,17 +95,21 @@ app.MapPost("/liststock", async (IServiceProvider services) =>
     //{
     //    Console.WriteLine($"DEBUG: Name={item.getName()}, Date={item.getDate()}, Price={item.getPrice()}, Sell={item.getSell()}, Rating={item.getRating()}");
     //}
-    foreach (Item item in items)
+    //pokus o vyřešení varování v githubu:
+    if (items != null)
     {
-        DataModel datamodel = new DataModel();
-        datamodel.Sell = item.getSell();
-        datamodel.Name = item.getName();
-        datamodel.Date = item.getDate();
-        datamodel.Rating = item.getRating();
-        dataModels.Add(datamodel);
-        Console.WriteLine($"Processing: {datamodel.Name}, Date: {datamodel.Date}, Rating: {datamodel.Rating}, Sell: {datamodel.Sell}");
+        //konec pokusu
+        foreach (Item item in items)
+        {
+            DataModel datamodel = new DataModel();
+            datamodel.Sell = item.getSell();
+            datamodel.Name = item.getName();
+            datamodel.Date = item.getDate();
+            datamodel.Rating = item.getRating();
+            dataModels.Add(datamodel);
+            Console.WriteLine($"Processing: {datamodel.Name}, Date: {datamodel.Date}, Rating: {datamodel.Rating}, Sell: {datamodel.Sell}");
+        }
     }
-
     Console.WriteLine(dataModels);
     Console.WriteLine("????????????????");
 
