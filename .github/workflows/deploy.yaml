@@ -13,6 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
       - name: Cache NuGet packages
         uses: actions/cache@v3
         with:
@@ -21,19 +26,51 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
       - name: Restore dependencies
         run: dotnet restore STIN_BurzaModule/STIN_BurzaModule.sln
 
       - name: Build solution
         run: dotnet build STIN_BurzaModule/STIN_BurzaModule.sln --configuration Release --no-restore
 
-      - name: Run tests
-        run: dotnet test STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj --no-build --no-restore --verbosity normal
+      - name: Install test coverage tools
+        run: |
+          dotnet add STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj package coverlet.collector
+          dotnet tool install --global dotnet-reportgenerator-globaltool
+
+      - name: Run tests with coverage
+        run: |
+          dotnet test STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj \
+            --no-build \
+            --no-restore \
+            --logger "console;verbosity=detailed" \
+            --collect:"XPlat Code Coverage" \
+            --results-directory ./TestResults \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Include=\"[STIN_BurzaModule*]*\" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=\"[*.Tests]*\"
+
+      - name: Verify coverage file
+        run: |
+          echo "Generated coverage files:"
+          find ./TestResults -name "coverage.cobertura.xml"
+          if [ ! -f "$(find ./TestResults -name coverage.cobertura.xml | head -1)" ]; then
+            echo "Error: Coverage file not found!"
+            exit 1
+          fi
+
+      - name: Generate HTML report
+        run: |
+          reportgenerator \
+            -reports:"$(find ./TestResults -name coverage.cobertura.xml | head -1)" \
+            -targetdir:"coveragereport" \
+            -reporttypes:Html
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coveragereport/
+          retention-days: 7
 
       - name: Publish web project
         run: dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
