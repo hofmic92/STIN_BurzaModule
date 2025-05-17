@@ -13,6 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
       - name: Cache NuGet packages
         uses: actions/cache@v3
         with:
@@ -20,11 +25,6 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
-
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
 
       - name: Restore dependencies
         run: dotnet restore STIN_BurzaModule/STIN_BurzaModule.sln
@@ -47,28 +47,28 @@ jobs:
             --results-directory ./TestResults \
             -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
 
-      - name: Verify coverage file exists
+      - name: Verify coverage file
         run: |
           echo "Generated coverage files:"
-          find ./TestResults -name "coverage.cobertura.xml" -exec ls -la {} \;
+          find ./TestResults -name "coverage.cobertura.xml"
           if [ ! -f "$(find ./TestResults -name coverage.cobertura.xml | head -1)" ]; then
             echo "Error: Coverage file not found!"
             exit 1
           fi
 
-      - name: Generate HTML coverage report
+      - name: Generate HTML report
         run: |
           reportgenerator \
             -reports:"$(find ./TestResults -name coverage.cobertura.xml | head -1)" \
             -targetdir:"coveragereport" \
             -reporttypes:Html
 
-      - name: Upload coverage report as artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: coveragereport/
-          retention-days: 5
+          retention-days: 7
 
       - name: Publish web project
         run: dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
