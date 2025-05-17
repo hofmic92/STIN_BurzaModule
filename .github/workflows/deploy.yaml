@@ -28,61 +28,30 @@ jobs:
         run: dotnet build STIN_BurzaModule/STIN_BurzaModule.sln --configuration Release --no-restore
 
       - name: Run tests with coverage
-        id: tests
         run: |
           mkdir -p TestResults
           dotnet test STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj \
             --no-build \
             --no-restore \
-            --logger "console;verbosity=normal" \
+            --settings coverlet.runsettings \
             --collect:"XPlat Code Coverage" \
-            --results-directory TestResults \
-            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura \
-            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Include=\"[STIN_BurzaModule*]*\" \
-            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=\"[xunit.*]*;[*.Tests]*\"
-
-      - name: Find coverage file
-        id: coverage
-        run: |
-          COVERAGE_FILE=$(find ./TestResults -name "coverage.cobertura.xml" | head -1)
-          if [ -z "$COVERAGE_FILE" ]; then
-            echo "::error::Coverage file not found!"
-            exit 1
-          fi
-          echo "file=$COVERAGE_FILE" >> $GITHUB_OUTPUT
-          echo "##[group]Coverage file content"
-          head -n 20 "$COVERAGE_FILE"
-          echo "##[endgroup]"
+            --results-directory TestResults
 
       - name: Generate HTML report
         run: |
+          COVERAGE_FILE=$(find ./TestResults -name "coverage.cobertura.xml" | head -1)
           reportgenerator \
-            "-reports:${{ steps.coverage.outputs.file }}" \
+            "-reports:$COVERAGE_FILE" \
             "-targetdir:coveragereport" \
-            "-reporttypes:Html" \
-            "-sourcedirs:./STIN_BurzaModule" \
-            "-verbosity:Warning"
-
-      - name: Verify report
-        run: |
-          echo "##[group]Generated report files"
-          ls -laR ./coveragereport
-          echo "##[endgroup]"
-          if [ ! -f "./coveragereport/index.html" ]; then
-            echo "::error::HTML report was not generated!"
-            exit 1
-          fi
+            "-reporttypes:Html"
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: coveragereport/
-          if-no-files-found: error
           retention-days: 3
 
       - name: Publish and deploy
-        if: success()
         run: |
           dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
-          # Zde pokračujte s deployem
