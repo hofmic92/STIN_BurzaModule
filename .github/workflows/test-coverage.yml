@@ -27,12 +27,12 @@ jobs:
       run: dotnet build STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj --configuration Release --no-restore
 
     - name: Run tests with coverage
-      run: dotnet test STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
+      run: dotnet test STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage"
 
     - name: Generate coverage report
       uses: danielpalme/ReportGenerator-GitHub-Action@5.2.4
       with:
-        reports: 'STIN_BurzaModule.Tests/TestResults/*/coverage.cobertura.xml'
+        reports: '**/coverage.cobertura.xml'
         targetdir: 'coveragereport'
         reporttypes: 'HtmlInline_AzurePipelines'
 
