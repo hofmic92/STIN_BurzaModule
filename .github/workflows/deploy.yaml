@@ -42,7 +42,13 @@ jobs:
             --no-restore \
             --verbosity normal \
             --collect:"XPlat Code Coverage" \
-
+            
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+            name: coverage-report
+            path: STIN_BurzaModule.Tests/TestResults/**/coverage.cobertura.xml
+            
       - name: Upload coverage to Codecov (volitelné)
         uses: codecov/codecov-action@v3
         with:
