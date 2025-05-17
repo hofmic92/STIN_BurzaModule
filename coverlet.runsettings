@@ -5,8 +5,10 @@
       <DataCollector friendlyName="XPlat code coverage">
         <Configuration>
           <Format>cobertura</Format>
-          <Include>[STIN_BurzaModule]*</Include>
-          <Exclude>[STIN_BurzaModule.Tests]*</Exclude>
+          <Include>[STIN_BurzaModule*]*</Include>
+          <Exclude>[*.Tests]*</Exclude>
+          <ExcludeByFile>**/obj/**/*</ExcludeByFile>
+          <MergeWith>$(Build.SourcesDirectory)/TestResults/coverage.cobertura.xml</MergeWith>
         </Configuration>
       </DataCollector>
     </DataCollectors>
