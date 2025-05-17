@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hofmi\\OneDrive\\Plocha\\konec\\STIN_BurzaModule\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj": {}
+    "C:\\Users\\hofmi\\Source\\Repos\\STIN_BurzaModule2\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hofmi\\OneDrive\\Plocha\\konec\\STIN_BurzaModule\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj": {
+    "C:\\Users\\hofmi\\Source\\Repos\\STIN_BurzaModule2\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hofmi\\OneDrive\\Plocha\\konec\\STIN_BurzaModule\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\hofmi\\Source\\Repos\\STIN_BurzaModule2\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj",
         "projectName": "STIN_BurzaModule.Tests",
-        "projectPath": "C:\\Users\\hofmi\\OneDrive\\Plocha\\konec\\STIN_BurzaModule\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj",
+        "projectPath": "C:\\Users\\hofmi\\Source\\Repos\\STIN_BurzaModule2\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj",
         "packagesPath": "C:\\Users\\hofmi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hofmi\\OneDrive\\Plocha\\konec\\STIN_BurzaModule\\STIN_BurzaModule.Tests\\obj\\",
+        "outputPath": "C:\\Users\\hofmi\\Source\\Repos\\STIN_BurzaModule2\\STIN_BurzaModule.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hofmi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -29,8 +29,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\hofmi\\OneDrive\\Plocha\\konec\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule.csproj": {
-                "projectPath": "C:\\Users\\hofmi\\OneDrive\\Plocha\\konec\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule.csproj"
+              "C:\\Users\\hofmi\\Source\\Repos\\STIN_BurzaModule2\\STIN_BurzaModule\\STIN_BurzaModule.csproj": {
+                "projectPath": "C:\\Users\\hofmi\\Source\\Repos\\STIN_BurzaModule2\\STIN_BurzaModule\\STIN_BurzaModule.csproj"
               }
             }
           }
@@ -57,6 +57,18 @@
             "Moq": {
               "target": "Package",
               "version": "[4.20.72, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "coverlet.msbuild": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.4, )"
             },
             "xunit": {
               "target": "Package",
@@ -87,14 +99,14 @@
         }
       }
     },
-    "C:\\Users\\hofmi\\OneDrive\\Plocha\\konec\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule.csproj": {
+    "C:\\Users\\hofmi\\Source\\Repos\\STIN_BurzaModule2\\STIN_BurzaModule\\STIN_BurzaModule.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hofmi\\OneDrive\\Plocha\\konec\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule.csproj",
+        "projectUniqueName": "C:\\Users\\hofmi\\Source\\Repos\\STIN_BurzaModule2\\STIN_BurzaModule\\STIN_BurzaModule.csproj",
         "projectName": "STIN_BurzaModule",
-        "projectPath": "C:\\Users\\hofmi\\OneDrive\\Plocha\\konec\\STIN_BurzaModule\\STIN_BurzaModule\\STIN_BurzaModule.csproj",
+        "projectPath": "C:\\Users\\hofmi\\Source\\Repos\\STIN_BurzaModule2\\STIN_BurzaModule\\STIN_BurzaModule.csproj",
         "packagesPath": "C:\\Users\\hofmi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hofmi\\OneDrive\\Plocha\\konec\\STIN_BurzaModule\\STIN_BurzaModule\\obj\\",
+        "outputPath": "C:\\Users\\hofmi\\Source\\Repos\\STIN_BurzaModule2\\STIN_BurzaModule\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hofmi\\AppData\\Roaming\\NuGet\\NuGet.Config",

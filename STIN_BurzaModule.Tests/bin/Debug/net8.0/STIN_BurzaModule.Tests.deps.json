@@ -37,14 +37,6 @@
           }
         }
       },
-      "FluentAssertions/8.2.0": {
-        "runtime": {
-          "lib/net6.0/FluentAssertions.dll": {
-            "assemblyVersion": "8.2.0.0",
-            "fileVersion": "8.2.0.0"
-          }
-        }
-      },
       "Microsoft.ApplicationInsights/2.23.0": {
         "dependencies": {
           "System.Diagnostics.DiagnosticSource": "5.0.0"
@@ -973,19 +965,16 @@
       "STIN_BurzaModule/1.0.0": {
         "dependencies": {
           "CsvHelper": "33.0.1",
-          "FluentAssertions": "8.2.0",
           "Microsoft.ApplicationInsights.AspNetCore": "2.23.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.8",
-          "Microsoft.NET.Test.Sdk": "17.13.0",
           "Newtonsoft.Json": "13.0.3",
           "Swashbuckle.AspNetCore": "6.4.0",
-          "System.Text.Json": "9.0.4",
-          "xunit": "2.9.3"
+          "System.Text.Json": "9.0.4"
         },
         "runtime": {
           "STIN_BurzaModule.dll": {
             "assemblyVersion": "1.0.0",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "1.0.0.0"
           }
         }
       }
@@ -1010,13 +999,6 @@
       "sha512": "sha512-fev4lynklAU2A9GVMLtwarkwaanjSYB4wUqO2nOJX5hnzObORzUqVLe+bDYCUyIIRQM4o5Bsq3CcyJR89iMmEQ==",
       "path": "csvhelper/33.0.1",
       "hashPath": "csvhelper.33.0.1.nupkg.sha512"
-    },
-    "FluentAssertions/8.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Gh4jkECcrR0i17ofCVqsiVz2+lxC+p5TYFPCrbZFi7eQQWGEZhvCDwvhycBKX1Kmtbd+H2CW/ugW7wdH9Br9NQ==",
-      "path": "fluentassertions/8.2.0",
-      "hashPath": "fluentassertions.8.2.0.nupkg.sha512"
     },
     "Microsoft.ApplicationInsights/2.23.0": {
       "type": "package",

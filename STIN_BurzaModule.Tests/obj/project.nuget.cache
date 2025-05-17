@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "9bwdHm5b2og=",
+  "dgSpecHash": "534RslWG2rc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\hofmi\\OneDrive\\Plocha\\konec\\STIN_BurzaModule\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj",
+  "projectFilePath": "C:\\Users\\hofmi\\Source\\Repos\\STIN_BurzaModule2\\STIN_BurzaModule.Tests\\STIN_BurzaModule.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hofmi\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
+    "C:\\Users\\hofmi\\.nuget\\packages\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
+    "C:\\Users\\hofmi\\.nuget\\packages\\coverlet.msbuild\\6.0.4\\coverlet.msbuild.6.0.4.nupkg.sha512",
     "C:\\Users\\hofmi\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512",
     "C:\\Users\\hofmi\\.nuget\\packages\\microsoft.applicationinsights\\2.23.0\\microsoft.applicationinsights.2.23.0.nupkg.sha512",
     "C:\\Users\\hofmi\\.nuget\\packages\\microsoft.applicationinsights.aspnetcore\\2.23.0\\microsoft.applicationinsights.aspnetcore.2.23.0.nupkg.sha512",
