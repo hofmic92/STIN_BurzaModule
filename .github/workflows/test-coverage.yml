@@ -29,6 +29,9 @@ jobs:
     - name: Run tests with coverage
       run: dotnet test STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage"
 
+    - name: Zobrazit obsah složky TestResults
+      run: ls -R STIN_BurzaModule.Tests/TestResults
+
     - name: Generate coverage report
       uses: danielpalme/ReportGenerator-GitHub-Action@5.2.4
       with:
