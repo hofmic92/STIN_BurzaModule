@@ -37,7 +37,7 @@ namespace StockModule.Pages
         {
             try
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(LogFilePath));
+                Directory.CreateDirectory(Path.GetDirectoryName(LogFilePath) ?? "Logs");
                 if (!System.IO.File.Exists(LogFilePath))
                 {
                     System.IO.File.Create(LogFilePath).Close();
