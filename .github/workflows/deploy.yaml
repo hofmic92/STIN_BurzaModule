@@ -13,92 +13,76 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup .NET SDK
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      - name: Cache NuGet packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-
-      - name: Restore dependencies
-        run: dotnet restore STIN_BurzaModule/STIN_BurzaModule.sln
-
-      - name: Build solution
-        run: dotnet build STIN_BurzaModule/STIN_BurzaModule.sln --configuration Release --no-restore
-
-      - name: Install coverage tools
+      - name: Install dependencies
         run: |
+          dotnet restore STIN_BurzaModule/STIN_BurzaModule.sln
           dotnet add STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj package coverlet.collector
           dotnet tool install --global dotnet-reportgenerator-globaltool
 
-      - name: Clean previous test results
-        run: |
-          rm -rf ./TestResults
-          mkdir -p ./TestResults
+      - name: Build
+        run: dotnet build STIN_BurzaModule/STIN_BurzaModule.sln --configuration Release --no-restore
 
       - name: Run tests with coverage
+        id: tests
         run: |
+          mkdir -p TestResults
           dotnet test STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj \
             --no-build \
             --no-restore \
-            --settings coverlet.runsettings \
+            --logger "console;verbosity=normal" \
             --collect:"XPlat Code Coverage" \
-            --results-directory ./TestResults \
-            --logger "console;verbosity=normal"
+            --results-directory TestResults \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Include=\"[STIN_BurzaModule*]*\" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=\"[xunit.*]*;[*.Tests]*\"
 
-      - name: Verify coverage file
+      - name: Find coverage file
+        id: coverage
         run: |
-          echo "Generated coverage files:"
-          find ./TestResults -name "coverage.cobertura.xml" -exec ls -la {} \;
-          if [ ! -f "$(find ./TestResults -name coverage.cobertura.xml | head -1)" ]; then
+          COVERAGE_FILE=$(find ./TestResults -name "coverage.cobertura.xml" | head -1)
+          if [ -z "$COVERAGE_FILE" ]; then
             echo "::error::Coverage file not found!"
             exit 1
           fi
+          echo "file=$COVERAGE_FILE" >> $GITHUB_OUTPUT
+          echo "##[group]Coverage file content"
+          head -n 20 "$COVERAGE_FILE"
+          echo "##[endgroup]"
 
       - name: Generate HTML report
         run: |
-          # Explicitně najdeme coverage soubor
-          COVERAGE_FILE=$(find ./TestResults -name "coverage.cobertura.xml" | head -1)
-          echo "Using coverage file: $COVERAGE_FILE"
-    
-          # Vytvoříme plný HTML report
           reportgenerator \
-            "-reports:$COVERAGE_FILE" \
+            "-reports:${{ steps.coverage.outputs.file }}" \
             "-targetdir:coveragereport" \
-            "-reporttypes:Html;Badges" \
+            "-reporttypes:Html" \
             "-sourcedirs:./STIN_BurzaModule" \
-            "-historydir:./coveragereport/history"
+            "-verbosity:Warning"
 
-          # Ověříme obsah složky
-          echo "Generated files in coveragereport:"
+      - name: Verify report
+        run: |
+          echo "##[group]Generated report files"
           ls -laR ./coveragereport
+          echo "##[endgroup]"
+          if [ ! -f "./coveragereport/index.html" ]; then
+            echo "::error::HTML report was not generated!"
+            exit 1
+          fi
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: |
-            coveragereport/index.html
-            coveragereport/**/*.html
-            coveragereport/**/*.css
-            coveragereport/**/*.js
-            coveragereport/**/*.svg
+          path: coveragereport/
           if-no-files-found: error
           retention-days: 3
 
-      - name: Publish web project
-        run: dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
-
-      - name: Deploy to Azure Web App
-        if: github.ref == 'refs/heads/main'
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'STINBurzaModule20250514183057'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ./publish
+      - name: Publish and deploy
+        if: success()
+        run: |
+          dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
+          # Zde pokračujte s deployem
