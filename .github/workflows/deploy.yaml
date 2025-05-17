@@ -32,8 +32,10 @@ jobs:
       - name: Build solution
         run: dotnet build STIN_BurzaModule/STIN_BurzaModule.sln --configuration Release --no-restore
 
-      - name: Install Coverlet (pro měření coverage)
-        run: dotnet add STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj package coverlet.collector
+      - name: Install Coverlet and ReportGenerator
+        run: |
+          dotnet add STIN_BurzaModule.Tests/STIN_BurzaModule.Tests.csproj package coverlet.collector
+          dotnet tool install --global dotnet-reportgenerator-globaltool
 
       - name: Run tests with coverage
         run: |
@@ -42,13 +44,20 @@ jobs:
             --no-restore \
             --verbosity normal \
             --collect:"XPlat Code Coverage" \
-            
-            
-      - name: Upload coverage to Codecov (volitelné)
-        uses: codecov/codecov-action@v3
+            --results-directory ./TestResults
+
+      - name: Generate HTML coverage report
+        run: |
+          reportgenerator \
+            -reports:"./TestResults/**/coverage.cobertura.xml" \
+            -targetdir:"coveragereport" \
+            -reporttypes:Html
+
+      - name: Upload coverage report as artifact
+        uses: actions/upload-artifact@v3
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}  # Vyžaduje nastavení secret v GitHub repo
-          files: ./**/coverage.cobertura.xml
+          name: coverage-report
+          path: coveragereport/
 
       - name: Publish web project
         run: dotnet publish STIN_BurzaModule/STIN_BurzaModule.csproj --configuration Release --output ./publish
