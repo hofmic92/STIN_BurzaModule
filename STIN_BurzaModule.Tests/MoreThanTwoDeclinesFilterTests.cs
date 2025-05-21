@@ -32,18 +32,25 @@ public class MoreThanTwoDeclinesFilterTests
     {
         var filter = new MoreThanTwoDeclinesFilter();
         var items = new List<Item>
-        {
-            new Item("RiskCorp", UnixDaysAgo(5), 200),
-            new Item("RiskCorp", UnixDaysAgo(4), 190), // pokles
-            new Item("RiskCorp", UnixDaysAgo(3), 180), // pokles
-            new Item("RiskCorp", UnixDaysAgo(2), 170), // pokles
-            new Item("RiskCorp", UnixDaysAgo(1), 160), // pokles
-        };
+    {
+        new Item("RiskCorp", UnixDate("2024-05-15"), 200), // středa
+        new Item("RiskCorp", UnixDate("2024-05-16"), 190), // čtvrtek (↓)
+        new Item("RiskCorp", UnixDate("2024-05-17"), 180), // pátek (↓)
+        new Item("RiskCorp", UnixDate("2024-05-20"), 170), // pondělí (↓)
+        new Item("RiskCorp", UnixDate("2024-05-21"), 160), // úterý (↓)
+    };
 
         var result = filter.filter(items);
 
         Assert.DoesNotContain(result, i => i.getName() == "RiskCorp");
     }
+
+    private long UnixDate(string dateStr)
+    {
+        var dt = DateTime.SpecifyKind(DateTime.Parse(dateStr), DateTimeKind.Utc);
+        return ((DateTimeOffset)dt).ToUnixTimeSeconds();
+    }
+
 
     [Fact]
     public void Filter_IgnoresWeekendDates()

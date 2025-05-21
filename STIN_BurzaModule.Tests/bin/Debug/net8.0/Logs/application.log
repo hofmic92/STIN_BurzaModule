@@ -2071,3 +2071,36 @@
 2025-05-21 14:06:17 | ✓ TSLA | 1747569977 | 106
 2025-05-21 14:06:17 | ✓ TSLA | 1747483577 | 108
 2025-05-21 14:06:17 | Stahování dokončeno v 14:06:17
+2025-05-21 14:13:59 | Položka přidána: GOOG
+2025-05-21 14:13:59 | Chyba při načítání oblíbených: The process cannot access the file 'C:\Users\hofmi\Source\Repos\STIN_BurzaModule3\STIN_BurzaModule.Tests\bin\Debug\net8.0\Data\favorites.json' because it is being used by another process.
+2025-05-21 14:13:59 | Spouštím stahování historických dat v 14:13:59
+2025-05-21 14:13:59 | Spouštím stahování historických dat v 14:13:59
+2025-05-21 14:13:59 | Stahování dokončeno v 14:13:59
+2025-05-21 14:13:59 | Chyba při načítání oblíbených: The process cannot access the file 'C:\Users\hofmi\Source\Repos\STIN_BurzaModule3\STIN_BurzaModule.Tests\bin\Debug\net8.0\Data\favorites.json' because it is being used by another process.
+2025-05-21 14:13:59 | Ratingy byly aktualizovány z externího servisu
+2025-05-21 14:13:59 | Načtení stránky Index
+2025-05-21 14:13:59 | Chyba při aktualizaci ratingů: 'I' is an invalid start of a value. Path: $ | LineNumber: 0 | BytePositionInLine: 0.
+2025-05-21 14:13:59 | Spouštím stahování historických dat v 14:13:59
+2025-05-21 14:13:59 | ✓ AAPL | 1747829639 | 100
+2025-05-21 14:13:59 | ✓ AAPL | 1747743239 | 102
+2025-05-21 14:13:59 | ✓ AAPL | 1747656839 | 104
+2025-05-21 14:13:59 | ✓ AAPL | 1747570439 | 106
+2025-05-21 14:13:59 | ✓ AAPL | 1747484039 | 108
+2025-05-21 14:13:59 | ✓ TSLA | 1747829639 | 100
+2025-05-21 14:13:59 | ✓ TSLA | 1747743239 | 102
+2025-05-21 14:13:59 | ✓ TSLA | 1747656839 | 104
+2025-05-21 14:13:59 | ✓ TSLA | 1747570439 | 106
+2025-05-21 14:13:59 | ✓ TSLA | 1747484039 | 108
+2025-05-21 14:13:59 | Stahování dokončeno v 14:13:59
+2025-05-21 14:13:59 | Spouštím stahování historických dat v 14:13:59
+2025-05-21 14:13:59 | ✓ GOOG | 1747829639 | 100
+2025-05-21 14:13:59 | ✓ GOOG | 1747743239 | 102
+2025-05-21 14:13:59 | ✓ GOOG | 1747656839 | 104
+2025-05-21 14:13:59 | ✓ GOOG | 1747570439 | 106
+2025-05-21 14:13:59 | ✓ GOOG | 1747484039 | 108
+2025-05-21 14:13:59 | ✓ TSLA | 1747829639 | 100
+2025-05-21 14:13:59 | ✓ TSLA | 1747743239 | 102
+2025-05-21 14:13:59 | ✓ TSLA | 1747656839 | 104
+2025-05-21 14:13:59 | ✓ TSLA | 1747570439 | 106
+2025-05-21 14:13:59 | ✓ TSLA | 1747484039 | 108
+2025-05-21 14:13:59 | Stahování dokončeno v 14:13:59
