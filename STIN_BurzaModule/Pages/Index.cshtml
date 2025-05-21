@@ -132,9 +132,7 @@
                                 }
                             </div>
                         }
-
                         else
-
                         {
                             <div class="alert alert-info">
                                 Žádné oblíbené položky. Přidejte nějaké výše.
@@ -205,14 +203,11 @@
                 });
             }
         }
-
-        // Získání doporučení - pouze poslední data
         document.getElementById('getRecommendationsBtn').addEventListener('click', async function () {
             const resultsDiv = document.getElementById('stockResults');
             resultsDiv.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Získávám doporučení...</div>';
 
             try {
-                // 1. Příprava dat - poslední záznamy pro každou akcii
                 const stocksData = @Html.Raw(Json.Serialize(Model.DownloadedItems
                     .GroupBy(i => i.getName())
                     .Select(g => g.OrderByDescending(i => i.getDate()).First())
@@ -223,8 +218,6 @@
 
                         Date = i.getDate()
                     })));
-
-                // 2. Odeslání na /salestock endpoint
                 const response = await fetch('/salestock', {
                     method: 'POST',
                     headers: {
@@ -238,8 +231,6 @@
                     const error = await response.text();
                     throw new Error(error);
                 }
-
-                // 3. Zpracování výsledků s ratingy
                 const resultData = await response.json();
                 displayStockResults(resultData);
 

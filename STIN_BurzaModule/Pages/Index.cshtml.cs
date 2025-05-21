@@ -68,8 +68,6 @@ namespace StockModule.Pages
 
             return items;
         }
-
-
         [BindProperty]
         public string? NewItem { get; set; }
 
@@ -118,8 +116,6 @@ namespace StockModule.Pages
             await FetchDataInternal();
             return Page();
         }
-
-
         public async Task<IActionResult> OnGetGetStockData()
         {
             await FetchDataInternal(); // Načte aktuální data
@@ -174,8 +170,6 @@ namespace StockModule.Pages
             LastUpdateTime = DateTime.Now;
             Log($"Stahování dokončeno v {LastUpdateTime:HH:mm:ss}");
         }
-
-        
 
         private async Task<List<Item>> FetchStockHistory(string symbol, int daysBack)
         {
@@ -292,8 +286,6 @@ namespace StockModule.Pages
             Log("Log byl vymazán");
             return RedirectToPage();
         }
-
-
         private void LoadFavoritesFromFile()
         {
             try
