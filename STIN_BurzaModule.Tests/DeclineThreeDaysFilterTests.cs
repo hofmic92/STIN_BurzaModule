@@ -29,24 +29,15 @@ public class DeclineThreeDaysFilterTests
     {
         var filter = new DeclineThreeDaysFilter();
         var items = new List<Item>
-    {
-        // Předpokládáme, že dnes je např. úterý → pracovní dny jsou: pátek, pondělí, úterý
-        // Vytvoříme data pro pátek, pondělí a úterý s klesající cenou
-        new Item("Decliner", UnixDate("2024-05-17"), 105), // pátek
-        new Item("Decliner", UnixDate("2024-05-20"), 102), // pondělí
-        new Item("Decliner", UnixDate("2024-05-21"), 100), // úterý
-    };
+        {
+            new Item("Decliner", UnixDaysAgo(3), 105),
+            new Item("Decliner", UnixDaysAgo(2), 102),
+            new Item("Decliner", UnixDaysAgo(1), 100)
+        };
 
         var result = filter.filter(items);
 
         Assert.DoesNotContain(result, i => i.getName() == "Decliner");
-    }
-
-    // Pomocná metoda pro převod data na unix timestamp
-    private long UnixDate(string dateStr)
-    {
-        var dt = DateTime.SpecifyKind(DateTime.Parse(dateStr), DateTimeKind.Utc);
-        return ((DateTimeOffset)dt).ToUnixTimeSeconds();
     }
 
     [Fact]
